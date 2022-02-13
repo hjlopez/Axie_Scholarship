@@ -56,6 +56,8 @@
             this.btnCashOut = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnGenerate = new System.Windows.Forms.Button();
+            this.btnExtras = new System.Windows.Forms.Button();
+            this.chkSelectAll = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScholarDetails)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -340,12 +342,37 @@
             this.btnGenerate.TabIndex = 14;
             this.btnGenerate.Text = "Generate Excel for Selected";
             this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
+            // btnExtras
+            // 
+            this.btnExtras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExtras.Location = new System.Drawing.Point(921, 50);
+            this.btnExtras.Name = "btnExtras";
+            this.btnExtras.Size = new System.Drawing.Size(75, 23);
+            this.btnExtras.TabIndex = 15;
+            this.btnExtras.Text = "Extras";
+            this.btnExtras.UseVisualStyleBackColor = true;
+            this.btnExtras.Click += new System.EventHandler(this.btnExtras_Click);
+            // 
+            // chkSelectAll
+            // 
+            this.chkSelectAll.AutoSize = true;
+            this.chkSelectAll.Location = new System.Drawing.Point(267, 54);
+            this.chkSelectAll.Name = "chkSelectAll";
+            this.chkSelectAll.Size = new System.Drawing.Size(187, 17);
+            this.chkSelectAll.TabIndex = 16;
+            this.chkSelectAll.Text = "Select All Non-Cashed Out Entries";
+            this.chkSelectAll.UseVisualStyleBackColor = true;
+            this.chkSelectAll.CheckedChanged += new System.EventHandler(this.chkSelectAll_CheckedChanged);
             // 
             // frmScholarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1167, 528);
+            this.Controls.Add(this.chkSelectAll);
+            this.Controls.Add(this.btnExtras);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnDeleteEntry);
@@ -399,5 +426,7 @@
         private System.Windows.Forms.Button btnCashOut;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button btnExtras;
+        private System.Windows.Forms.CheckBox chkSelectAll;
     }
 }

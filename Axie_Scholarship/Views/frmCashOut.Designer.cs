@@ -49,6 +49,9 @@
             this.btnCashOut = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkExcel = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblAdjSLP = new System.Windows.Forms.Label();
+            this.chkApply = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMissingDates)).BeginInit();
             this.grpScholar.SuspendLayout();
             this.SuspendLayout();
@@ -171,6 +174,8 @@
             // 
             // grpScholar
             // 
+            this.grpScholar.Controls.Add(this.lblAdjSLP);
+            this.grpScholar.Controls.Add(this.label6);
             this.grpScholar.Controls.Add(this.lblShare);
             this.grpScholar.Controls.Add(this.label5);
             this.grpScholar.Controls.Add(this.lblScholarSLP);
@@ -188,7 +193,7 @@
             // 
             this.lblShare.AutoSize = true;
             this.lblShare.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblShare.Location = new System.Drawing.Point(288, 39);
+            this.lblShare.Location = new System.Drawing.Point(285, 60);
             this.lblShare.Name = "lblShare";
             this.lblShare.Size = new System.Drawing.Size(45, 24);
             this.lblShare.TabIndex = 13;
@@ -198,7 +203,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(217, 39);
+            this.label5.Location = new System.Drawing.Point(214, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 24);
             this.label5.TabIndex = 12;
@@ -256,11 +261,43 @@
             this.chkExcel.Text = "Generate Excel File on Cash Out";
             this.chkExcel.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(214, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 24);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Adj.";
+            // 
+            // lblAdjSLP
+            // 
+            this.lblAdjSLP.AutoSize = true;
+            this.lblAdjSLP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdjSLP.Location = new System.Drawing.Point(285, 25);
+            this.lblAdjSLP.Name = "lblAdjSLP";
+            this.lblAdjSLP.Size = new System.Drawing.Size(36, 24);
+            this.lblAdjSLP.TabIndex = 15;
+            this.lblAdjSLP.Text = "-20";
+            // 
+            // chkApply
+            // 
+            this.chkApply.AutoSize = true;
+            this.chkApply.Location = new System.Drawing.Point(445, 60);
+            this.chkApply.Name = "chkApply";
+            this.chkApply.Size = new System.Drawing.Size(130, 17);
+            this.chkApply.TabIndex = 14;
+            this.chkApply.Text = "Apply SLP Adjustment";
+            this.chkApply.UseVisualStyleBackColor = true;
+            this.chkApply.CheckedChanged += new System.EventHandler(this.chkApply_CheckedChanged);
+            // 
             // frmCashOut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 242);
+            this.Controls.Add(this.chkApply);
             this.Controls.Add(this.chkExcel);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCashOut);
@@ -301,5 +338,8 @@
         private System.Windows.Forms.Button btnCashOut;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox chkExcel;
+        private System.Windows.Forms.Label lblAdjSLP;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkApply;
     }
 }

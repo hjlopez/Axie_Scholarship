@@ -270,6 +270,7 @@ namespace Axie_Scholarship.Views
         {
             var s = dgvScholarDetails.SelectedRows;
             LoadDataGrid();
+            chkSelectAll.Checked = false;
         }
 
         private void btnCashOut_Click(object sender, EventArgs e)
@@ -307,6 +308,41 @@ namespace Axie_Scholarship.Views
                 }
 
             }
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            var excelGenerator = new ExcelGenerator();
+            excelGenerator.LoadExcel();
+        }
+
+        private void btnExtras_Click(object sender, EventArgs e)
+        {
+            var frm = new frmAddOrSubtractSLP(scholar.ScholarId);
+            frm.ShowDialog();
+        }
+
+        private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSelectAll.Checked)
+            {
+                foreach (DataGridViewRow row in dgvScholarDetails.Rows)
+                {
+                    if (!Convert.ToBoolean(row.Cells["Cash Out"].Value))
+                    {
+                        row.Selected = true;
+                    }
+                    
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dgvScholarDetails.Rows)
+                {
+                    row.Selected = false;
+                }
+            }
+            
         }
     }
 }
