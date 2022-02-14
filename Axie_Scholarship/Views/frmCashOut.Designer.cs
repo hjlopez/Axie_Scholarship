@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.lblDateFrom = new System.Windows.Forms.Label();
             this.lblDateTo = new System.Windows.Forms.Label();
@@ -42,6 +42,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblTotalSLP = new System.Windows.Forms.Label();
             this.grpScholar = new System.Windows.Forms.GroupBox();
+            this.lblAdjSLP = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.lblShare = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lblScholarSLP = new System.Windows.Forms.Label();
@@ -49,9 +51,10 @@
             this.btnCashOut = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkExcel = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblAdjSLP = new System.Windows.Forms.Label();
             this.chkApply = new System.Windows.Forms.CheckBox();
+            this.lblSLPValue = new System.Windows.Forms.Label();
+            this.lblConvert = new System.Windows.Forms.Label();
+            this.btnSLPLatest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMissingDates)).BeginInit();
             this.grpScholar.SuspendLayout();
             this.SuspendLayout();
@@ -106,42 +109,42 @@
             this.dgvMissingDates.AllowUserToDeleteRows = false;
             this.dgvMissingDates.AllowUserToResizeColumns = false;
             this.dgvMissingDates.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvMissingDates.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvMissingDates.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.dgvMissingDates.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMissingDates.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMissingDates.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.dgvMissingDates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMissingDates.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMissingDates.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMissingDates.DefaultCellStyle = dataGridViewCellStyle23;
             this.dgvMissingDates.Location = new System.Drawing.Point(22, 73);
             this.dgvMissingDates.Name = "dgvMissingDates";
             this.dgvMissingDates.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMissingDates.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMissingDates.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.dgvMissingDates.RowHeadersVisible = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvMissingDates.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvMissingDates.RowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dgvMissingDates.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMissingDates.Size = new System.Drawing.Size(152, 94);
             this.dgvMissingDates.TabIndex = 7;
@@ -189,6 +192,26 @@
             this.grpScholar.TabStop = false;
             this.grpScholar.Text = "Scholar Details";
             // 
+            // lblAdjSLP
+            // 
+            this.lblAdjSLP.AutoSize = true;
+            this.lblAdjSLP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdjSLP.Location = new System.Drawing.Point(285, 25);
+            this.lblAdjSLP.Name = "lblAdjSLP";
+            this.lblAdjSLP.Size = new System.Drawing.Size(36, 24);
+            this.lblAdjSLP.TabIndex = 15;
+            this.lblAdjSLP.Text = "-20";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(214, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 24);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Adj.";
+            // 
             // lblShare
             // 
             this.lblShare.AutoSize = true;
@@ -232,7 +255,7 @@
             // btnCashOut
             // 
             this.btnCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCashOut.Location = new System.Drawing.Point(455, 184);
+            this.btnCashOut.Location = new System.Drawing.Point(634, 94);
             this.btnCashOut.Name = "btnCashOut";
             this.btnCashOut.Size = new System.Drawing.Size(122, 36);
             this.btnCashOut.TabIndex = 11;
@@ -243,7 +266,7 @@
             // btnCancel
             // 
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.Location = new System.Drawing.Point(327, 185);
+            this.btnCancel.Location = new System.Drawing.Point(634, 53);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(122, 35);
             this.btnCancel.TabIndex = 12;
@@ -261,26 +284,6 @@
             this.chkExcel.Text = "Generate Excel File on Cash Out";
             this.chkExcel.UseVisualStyleBackColor = true;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(214, 25);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 24);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Adj.";
-            // 
-            // lblAdjSLP
-            // 
-            this.lblAdjSLP.AutoSize = true;
-            this.lblAdjSLP.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAdjSLP.Location = new System.Drawing.Point(285, 25);
-            this.lblAdjSLP.Name = "lblAdjSLP";
-            this.lblAdjSLP.Size = new System.Drawing.Size(36, 24);
-            this.lblAdjSLP.TabIndex = 15;
-            this.lblAdjSLP.Text = "-20";
-            // 
             // chkApply
             // 
             this.chkApply.AutoSize = true;
@@ -292,11 +295,46 @@
             this.chkApply.UseVisualStyleBackColor = true;
             this.chkApply.CheckedChanged += new System.EventHandler(this.chkApply_CheckedChanged);
             // 
+            // lblSLPValue
+            // 
+            this.lblSLPValue.AutoSize = true;
+            this.lblSLPValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSLPValue.Location = new System.Drawing.Point(592, 172);
+            this.lblSLPValue.Name = "lblSLPValue";
+            this.lblSLPValue.Size = new System.Drawing.Size(182, 24);
+            this.lblSLPValue.TabIndex = 16;
+            this.lblSLPValue.Text = "SLP Value: Php 0.00";
+            // 
+            // lblConvert
+            // 
+            this.lblConvert.AutoSize = true;
+            this.lblConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConvert.ForeColor = System.Drawing.Color.Green;
+            this.lblConvert.Location = new System.Drawing.Point(259, 190);
+            this.lblConvert.Name = "lblConvert";
+            this.lblConvert.Size = new System.Drawing.Size(276, 24);
+            this.lblConvert.TabIndex = 17;
+            this.lblConvert.Text = "Scholar Receives: Php 1,250.25";
+            // 
+            // btnSLPLatest
+            // 
+            this.btnSLPLatest.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSLPLatest.Location = new System.Drawing.Point(634, 199);
+            this.btnSLPLatest.Name = "btnSLPLatest";
+            this.btnSLPLatest.Size = new System.Drawing.Size(105, 27);
+            this.btnSLPLatest.TabIndex = 18;
+            this.btnSLPLatest.Text = "Check SLP Value";
+            this.btnSLPLatest.UseVisualStyleBackColor = true;
+            this.btnSLPLatest.Click += new System.EventHandler(this.btnSLPLatest_Click);
+            // 
             // frmCashOut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 242);
+            this.ClientSize = new System.Drawing.Size(800, 238);
+            this.Controls.Add(this.btnSLPLatest);
+            this.Controls.Add(this.lblConvert);
+            this.Controls.Add(this.lblSLPValue);
             this.Controls.Add(this.chkApply);
             this.Controls.Add(this.chkExcel);
             this.Controls.Add(this.btnCancel);
@@ -312,6 +350,7 @@
             this.Name = "frmCashOut";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cash Out";
+            this.Load += new System.EventHandler(this.frmCashOut_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMissingDates)).EndInit();
             this.grpScholar.ResumeLayout(false);
             this.grpScholar.PerformLayout();
@@ -341,5 +380,8 @@
         private System.Windows.Forms.Label lblAdjSLP;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox chkApply;
+        private System.Windows.Forms.Label lblSLPValue;
+        private System.Windows.Forms.Label lblConvert;
+        private System.Windows.Forms.Button btnSLPLatest;
     }
 }

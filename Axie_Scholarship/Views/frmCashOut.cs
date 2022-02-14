@@ -1,4 +1,5 @@
-﻿using Axie_Scholarship.Models;
+﻿using Axie_Scholarship.API;
+using Axie_Scholarship.Models;
 using Axie_Scholarship.Presenters;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,8 @@ namespace Axie_Scholarship.Views
             }
             
             lblScholarSLP.Text = (Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100)).ToString();
+
+            lblAdjSLP.Text = presenter.GetScholarExtrasById(scholar.ScholarId).ToString();
         }
 
         private void DetermineMissingDates()
@@ -137,8 +140,8 @@ namespace Axie_Scholarship.Views
 
         private void btnCashOut_Click(object sender, EventArgs e)
         {
-            var success = presenter.CashOutSLP(rowCollection);
-
+            var cashOut = GenerateHistory();
+            var success = presenter.CashOutSLP(rowCollection, chkApply.Checked, scholar.ScholarId, cashOut);
             if (success)
             {
                 MessageBox.Show("Cash out successful!");
@@ -151,6 +154,20 @@ namespace Axie_Scholarship.Views
             }
         }
 
+        private CashOut GenerateHistory()
+        {
+            var cashOut = new CashOut();
+            cashOut.ScholarId = scholar.ScholarId;
+            cashOut.TotalSLP = Convert.ToInt32(lblTotalSLP.Text);
+            cashOut.ScholarSLP = Convert.ToDecimal(lblScholarSLP.Text);
+            cashOut.ExtraSLP = Convert.ToInt32(lblAdjSLP.Text);
+            cashOut.CashOutDate = DateTime.Now.ToShortDateString();
+            cashOut.SLPValue = Convert.ToDecimal(lblSLPValue.Text.Substring(lblSLPValue.Text.IndexOf("Php ") + 4));
+            cashOut.AmountReceived = Convert.ToDecimal(lblConvert.Text.Substring(lblConvert.Text.IndexOf("Php ")+4));
+
+            return cashOut;
+        }
+
         private void chkApply_CheckedChanged(object sender, EventArgs e)
         {
             if (chkApply.Checked)
@@ -161,6 +178,26 @@ namespace Axie_Scholarship.Views
             {
                 LoadDetails(false);
             }
+        }
+
+        private async void btnSLPLatest_Click(object sender, EventArgs e)
+        {
+            var slp = await SLPValue.GetSLPValue();
+            decimal php = slp.market_data.current_price.php;
+            lblSLPValue.Text = "SLP Value: Php " + php.ToString();
+
+            decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
+            lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+        }
+
+        private async void frmCashOut_Load(object sender, EventArgs e)
+        {
+            var slp = await SLPValue.GetSLPValue();
+            decimal php = slp.market_data.current_price.php;
+            lblSLPValue.Text = "SLP Value: Php " + php.ToString();
+
+            decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
+            lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
         }
     }
 }

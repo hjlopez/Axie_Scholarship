@@ -129,15 +129,30 @@ namespace Axie_Scholarship.Presenters
             }
         }
 
-        public bool CashOutSLP(List<DataGridViewRow> rows)
+        public bool CashOutSLP(List<DataGridViewRow> rows, bool isApplied, long scholarId, CashOut cashOut)
         {
             try
             {
-
                 foreach (DataGridViewRow item in rows)
                 {
                     dal.ExecuteDataTable("usp_cashout_scholar_slp", dal.MakeInputParameters("SCHOLARDETAILID", Convert.ToInt64(item.Cells[0].Value)));
                 }
+
+                // extras
+                if (isApplied)
+                {
+                    dal.ExecuteDataTable("usp_upd_scholar_extras", dal.MakeInputParameters("SCHOLARID", scholarId));
+                }
+
+                // transact history
+                dal.ExecuteDataTable("usp_ins_cashout_transaction",
+                                dal.MakeInputParameters("SCHOLARID", cashOut.ScholarId),
+                                dal.MakeInputParameters("TOTALSLP", cashOut.TotalSLP),
+                                dal.MakeInputParameters("SCHOLARSLP", cashOut.ScholarSLP),
+                                dal.MakeInputParameters("EXTRASLP", cashOut.ExtraSLP),
+                                dal.MakeInputParameters("CASHOUTDATE", cashOut.CashOutDate),
+                                dal.MakeInputParameters("SLPVALUE", cashOut.SLPValue),
+                                dal.MakeInputParameters("AMOUNTRECEIVED", cashOut.AmountReceived));
 
                 return true;
             }
@@ -158,6 +173,25 @@ namespace Axie_Scholarship.Presenters
                     total += Convert.ToInt32(item.Cells[2].Value);
                 }
                 return total;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+        }
+
+        public int GetScholarExtrasById(long scholarId)
+        {
+            int slp = 0;
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_extras_scholar_byId", dal.MakeInputParameters("SCHOLARID", scholarId));
+                foreach (DataRow item in dt.Rows)
+                {
+                    slp += Convert.ToInt32(item["SLPValue"]);
+                }
+                return slp;
             }
             catch (Exception ex)
             {

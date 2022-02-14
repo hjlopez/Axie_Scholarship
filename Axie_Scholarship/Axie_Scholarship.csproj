@@ -33,9 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,16 +53,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\SLPValue.cs" />
     <Compile Include="Connection\GetConnection.cs" />
     <Compile Include="DataAccess\DataAccessLayer.cs" />
     <Compile Include="Helpers\ConversionHelper.cs" />
+    <Compile Include="Helpers\ExcelGenerator.cs" />
     <Compile Include="Helpers\ExpressionsHelper.cs" />
     <Compile Include="Logs\Logger.cs" />
+    <Compile Include="Models\CashOut.cs" />
+    <Compile Include="Models\ExtraSLP.cs" />
     <Compile Include="Models\Scholar.cs" />
     <Compile Include="Models\ScholarDetails.cs" />
+    <Compile Include="Presenters\ExtrasPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\ScholarSLPPresenter.cs" />
+    <Compile Include="ViewModels\ExtraSLPViewModel.cs" />
     <Compile Include="ViewModels\ScholarDetailViewModel.cs" />
+    <Compile Include="ViewModels\SLPCoinViewModel.cs" />
+    <Compile Include="Views\frmAddOrSubtractSLP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmAddOrSubtractSLP.Designer.cs">
+      <DependentUpon>frmAddOrSubtractSLP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\frmAddScholar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +108,9 @@
     <Compile Include="Views\frmScholarView.Designer.cs">
       <DependentUpon>frmScholarView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\frmAddOrSubtractSLP.resx">
+      <DependentUpon>frmAddOrSubtractSLP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\frmAddScholar.resx">
       <DependentUpon>frmAddScholar.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +135,7 @@
     <EmbeddedResource Include="Views\frmScholarView.resx">
       <DependentUpon>frmScholarView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -126,6 +149,34 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

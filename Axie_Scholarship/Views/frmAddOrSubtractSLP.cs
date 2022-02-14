@@ -1,5 +1,7 @@
-﻿using Axie_Scholarship.Models;
+﻿using Axie_Scholarship.API;
+using Axie_Scholarship.Models;
 using Axie_Scholarship.Presenters;
+using Axie_Scholarship.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +18,7 @@ namespace Axie_Scholarship.Views
     {
         ExtraSLP extraSLP = null;
         ExtrasPresenter presenter;
+        ExtraSLPViewModel vm;
 
         long scholarId = 0;
         public frmAddOrSubtractSLP(long scholarId)
@@ -25,7 +28,12 @@ namespace Axie_Scholarship.Views
 
             extraSLP = new ExtraSLP();
             presenter = new ExtrasPresenter();
+            vm = new ExtraSLPViewModel();
             this.HelpButtonClicked += frmAddOrSubtractSLP_HelpButtonClicked;
+
+            dtpStart.Value = new DateTime(DateTime.Now.Year, 1, 1);
+            dtpEnd.Value = DateTime.Now.Date;
+            Reload();
         }
 
         private void frmAddOrSubtractSLP_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -38,6 +46,30 @@ namespace Axie_Scholarship.Views
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void LoadData()
+        {
+            dgvList.DataSource = presenter.LoadData(vm);
+            if (dgvList.DataSource != null)
+            {
+                dgvList.Columns[0].Visible = false;
+                dgvList.Columns[1].Visible = false;
+
+                dgvList.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvList.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvList.Columns[2].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvList.Columns[3].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvList.Columns[4].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvList.Columns[5].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        private void GenerateParameters()
+        {
+            vm.ScholarId = scholarId;
+            vm.StartDate = dtpStart.Value.ToShortDateString();
+            vm.EndDate = dtpEnd.Value.ToShortDateString();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -56,6 +88,18 @@ namespace Axie_Scholarship.Views
                 extraSLP.SLPValue = Convert.ToInt32("-" + txtBonus.Text);
             }
             presenter.InsertScholarExtras(extraSLP);
+            Reload();
+        }
+
+        private void Reload()
+        {
+            GenerateParameters();
+            LoadData();
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            Reload();
         }
     }
 }

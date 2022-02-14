@@ -292,8 +292,6 @@ namespace Axie_Scholarship.Views
                     {
                         var frm = new frmCashOut(rowsNotCashOut, scholar);
                         ret = frm.ShowDialog();
-
-                        
                     }
                 }
                 else
