@@ -59,6 +59,7 @@
     <Compile Include="Helpers\ConversionHelper.cs" />
     <Compile Include="Helpers\ExcelGenerator.cs" />
     <Compile Include="Helpers\ExpressionsHelper.cs" />
+    <Compile Include="Interface\IData.cs" />
     <Compile Include="Logs\Logger.cs" />
     <Compile Include="Models\CashOut.cs" />
     <Compile Include="Models\ExtraSLP.cs" />

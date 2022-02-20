@@ -154,7 +154,7 @@ namespace Axie_Scholarship.DataAccess
                 }
             }
 
-            return null/* TODO Change to default(_) if this is not a reference type */;
+            //return null/* TODO Change to default(_) if this is not a reference type */;
         }
 
         // Execute Data Tables WITHOUT Parameters
@@ -196,7 +196,7 @@ namespace Axie_Scholarship.DataAccess
                 }
             }
 
-            return null/* TODO Change to default(_) if this is not a reference type */;
+            //return null/* TODO Change to default(_) if this is not a reference type */;
         }
 
         // Execute Stored Procedures WITH Parameters

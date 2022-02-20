@@ -1,6 +1,7 @@
 ﻿using Axie_Scholarship.Helpers;
 using Axie_Scholarship.Models;
 using Axie_Scholarship.Presenters;
+using Axie_Scholarship.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,15 +17,17 @@ namespace Axie_Scholarship.Views
     public partial class frmAddSLPEntry : Form
     {
         ScholarDetails scholarDetails;
-        ScholarSLPPresenter presenter;
+        ScholarSLPPresenter<ScholarDetailViewModel> presenter;
+        ScholarDetailViewModel vm;
         long scholarId;
         public frmAddSLPEntry(long scholarId)
         {
             InitializeComponent();
             this.scholarId = scholarId;
             this.HelpButtonClicked += frmAddSLPEntry_HelpButtonClicked;
+            vm = new ScholarDetailViewModel();
             scholarDetails = new ScholarDetails();
-            presenter = new ScholarSLPPresenter();
+            presenter = new ScholarSLPPresenter<ScholarDetailViewModel>();
             txtSLPEarned.KeyPress += new KeyPressEventHandler(txtSLPEarned_KeyPress);
             txtSLPEarned.TextChanged += new EventHandler(txtSLPEarned_TextChanged);
             txtSLPStart.TextChanged += new EventHandler(txtSLPStart_TextChanged);
@@ -66,25 +69,26 @@ namespace Axie_Scholarship.Views
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            vm.ScholarDetails = new ScholarDetails();
             var success = false;
-            scholarDetails.DateEarned = dtpEarned.Value.ToString("yyyyMMdd");
-            scholarDetails.ScholarId = this.scholarId;
-            scholarDetails.SLPStart = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPStart.Text));
-            scholarDetails.SLPEnd = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPEnd.Text));
-            scholarDetails.SLPEarnedToday = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPEarned.Text));
+            vm.ScholarDetails.DateEarned = dtpEarned.Value.ToString("yyyyMMdd");
+            vm.ScholarDetails.ScholarId = this.scholarId;
+            vm.ScholarDetails.SLPStart = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPStart.Text));
+            vm.ScholarDetails.SLPEnd = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPEnd.Text));
+            vm.ScholarDetails.SLPEarnedToday = Convert.ToInt32(ConversionHelper.ReturnZeroIfNull(txtSLPEarned.Text));
 
-            if (scholarDetails.SLPEarnedToday == 0)
+            if (vm.ScholarDetails.SLPEarnedToday == 0)
             {
                 DialogResult result = MessageBox.Show("SLP earned today is 0. Do you want to save this entry?", "Zero SLP", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    success = presenter.SaveEntry(scholarDetails);
+                    success = presenter.Insert(vm);
                 }
                
             }
             else
             {
-                success = presenter.SaveEntry(scholarDetails);
+                success = presenter.Insert(vm);
             }
 
             if (success)

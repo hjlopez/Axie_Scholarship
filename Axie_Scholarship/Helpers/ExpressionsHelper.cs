@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Axie_Scholarship.Helpers
@@ -10,7 +11,8 @@ namespace Axie_Scholarship.Helpers
     {
         public static bool NumbersOnly(string value)
         {
-            if (System.Text.RegularExpressions.Regex.IsMatch(value, "[^0-9]"))
+            Regex regex = new Regex("^[0-9]+$");
+            if (!regex.IsMatch(value))
             {
                 return false;
             }

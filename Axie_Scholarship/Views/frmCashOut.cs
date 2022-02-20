@@ -1,6 +1,8 @@
 ﻿using Axie_Scholarship.API;
+using Axie_Scholarship.Helpers;
 using Axie_Scholarship.Models;
 using Axie_Scholarship.Presenters;
+using Axie_Scholarship.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,16 +19,18 @@ namespace Axie_Scholarship.Views
     {
         List<DataGridViewRow> rowCollection;
         Scholar scholar;
-        ScholarSLPPresenter presenter;
+        ScholarSLPPresenter<ScholarDetailViewModel> presenter;
+        DataGridViewSelectedRowCollection r;
         string minDate = "";
         string maxDate = "";
         string origSLP = "";
-        public frmCashOut(List<DataGridViewRow> rows, Scholar scholar)
+        public frmCashOut(List<DataGridViewRow> rows, DataGridViewSelectedRowCollection r2, Scholar scholar)
         {
             InitializeComponent();
             rowCollection = rows;
             this.scholar = scholar;
-            presenter = new ScholarSLPPresenter();
+            this.r = r2;
+            presenter = new ScholarSLPPresenter<ScholarDetailViewModel>();
             GetMinAndMaxDate();
             LoadDetails();
             DetermineMissingDates();
@@ -56,6 +60,8 @@ namespace Axie_Scholarship.Views
             lblScholarSLP.Text = (Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100)).ToString();
 
             lblAdjSLP.Text = presenter.GetScholarExtrasById(scholar.ScholarId).ToString();
+
+            frmCashOut_Load(null, null);
         }
 
         private void DetermineMissingDates()
@@ -145,6 +151,14 @@ namespace Axie_Scholarship.Views
             if (success)
             {
                 MessageBox.Show("Cash out successful!");
+                if (chkExcel.Checked)
+                {
+                    var excel = new ExcelGenerator(r, scholar, true, cashOut);
+                    excel.LoadExcel();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                }
+                
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
@@ -160,7 +174,12 @@ namespace Axie_Scholarship.Views
             cashOut.ScholarId = scholar.ScholarId;
             cashOut.TotalSLP = Convert.ToInt32(lblTotalSLP.Text);
             cashOut.ScholarSLP = Convert.ToDecimal(lblScholarSLP.Text);
-            cashOut.ExtraSLP = Convert.ToInt32(lblAdjSLP.Text);
+
+            if (chkApply.Checked)
+            {
+                cashOut.ExtraSLP = Convert.ToInt32(lblAdjSLP.Text);
+            }
+           
             cashOut.CashOutDate = DateTime.Now.ToShortDateString();
             cashOut.SLPValue = Convert.ToDecimal(lblSLPValue.Text.Substring(lblSLPValue.Text.IndexOf("Php ") + 4));
             cashOut.AmountReceived = Convert.ToDecimal(lblConvert.Text.Substring(lblConvert.Text.IndexOf("Php ")+4));

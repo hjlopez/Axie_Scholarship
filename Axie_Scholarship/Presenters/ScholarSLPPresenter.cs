@@ -1,5 +1,6 @@
 ﻿using Axie_Scholarship.DataAccess;
 using Axie_Scholarship.Helpers;
+using Axie_Scholarship.Interface;
 using Axie_Scholarship.Logs;
 using Axie_Scholarship.Models;
 using Axie_Scholarship.ViewModels;
@@ -14,30 +15,12 @@ using System.Windows.Forms;
 
 namespace Axie_Scholarship.Presenters
 {
-    public class ScholarSLPPresenter
+    public class ScholarSLPPresenter<T> : IData<T> where T : ScholarDetailViewModel
     {
         DataAccessLayer dal;
         public ScholarSLPPresenter()
         {
             dal = new DataAccessLayer();
-        }
-
-        public DataTable LoadDataGrid(ScholarDetailViewModel vm)
-        {
-            try
-            {
-                var dt = dal.ExecuteDataTable("usp_get_scholar_slp", 
-                                                dal.MakeInputParameters("SCHOLARID", vm.ScholarId),
-                                                dal.MakeInputParameters("STARTDATE", vm.StartDate),
-                                                dal.MakeInputParameters("ENDDATE", vm.EndDate),
-                                                dal.MakeInputParameters("CASHOUTTYPE", vm.CashOutType));
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
         }
 
         public string ComputeEarnedSLP(string start, string end)
@@ -55,39 +38,7 @@ namespace Axie_Scholarship.Presenters
             }
         }
 
-        public bool SaveEntry(ScholarDetails scholarDetails)
-        {
-            try
-            {
-                var result = dal.ExecuteDataTable("usp_insert_slp_entry",
-                                    dal.MakeInputParameters("SCHOLARID", scholarDetails.ScholarId),
-                                    dal.MakeInputParameters("SLPSTART", scholarDetails.SLPStart),
-                                    dal.MakeInputParameters("SLPEND", scholarDetails.SLPEnd),
-                                    dal.MakeInputParameters("SLPEARNED", scholarDetails.SLPEarnedToday),
-                                    dal.MakeInputParameters("DATEEARNED", scholarDetails.DateEarned),
-                                    dal.MakeInputParameters("ISCASHEDOUT", scholarDetails.IsCashedOut));
-
-                if (result != null)
-                {
-                    var errMessage = result.Rows[0]["ErrorMessage"].ToString();
-                    if (errMessage.ToUpper().Contains("UNIQUE"))
-                    {
-                        MessageBox.Show("There is already an existing entry with the same date! Please check your inputs again.","", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                }
-                MessageBox.Show("Successfully saved!");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                MessageBox.Show("Something went wrong while saving. Please check the logs.");
-                return false;
-            }
-        }
-
-        public bool ComposeDeleteEntry(DataGridViewSelectedRowCollection rows)
+        public List<ScholarDetails> ComposeDeleteEntry(DataGridViewSelectedRowCollection rows)
         {
             try
             {
@@ -102,30 +53,12 @@ namespace Axie_Scholarship.Presenters
                     detailList.Add(scholarDetail);
                 }
 
-                return DeleteSLPEntries(detailList);
+                return detailList;
             }
             catch (Exception ex)
             {
                 Logger.WriteLog(ex);
-                return false;
-            }
-        }
-
-        public bool DeleteSLPEntries(List<ScholarDetails> list)
-        {
-            try
-            {
-                foreach (var item in list)
-                {
-                    dal.ExecuteDataTable("usp_delete_slp_entry", dal.MakeInputParameters("SCHOLARDETAILID", item.ScholarDetailId));
-                }
-                
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return false;
+                return null;
             }
         }
 
@@ -198,6 +131,79 @@ namespace Axie_Scholarship.Presenters
                 Logger.WriteLog(ex);
                 return 0;
             }
+        }
+
+        public DataTable LoadData(T vm)
+        {
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_scholar_slp",
+                                                dal.MakeInputParameters("SCHOLARID", vm.ScholarId),
+                                                dal.MakeInputParameters("STARTDATE", vm.StartDate),
+                                                dal.MakeInputParameters("ENDDATE", vm.EndDate),
+                                                dal.MakeInputParameters("CASHOUTTYPE", vm.CashOutType));
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
+        public bool Insert(T vm)
+        {
+            try
+            {
+                var result = dal.ExecuteDataTable("usp_insert_slp_entry",
+                                    dal.MakeInputParameters("SCHOLARID", vm.ScholarDetails.ScholarId),
+                                    dal.MakeInputParameters("SLPSTART", vm.ScholarDetails.SLPStart),
+                                    dal.MakeInputParameters("SLPEND", vm.ScholarDetails.SLPEnd),
+                                    dal.MakeInputParameters("SLPEARNED", vm.ScholarDetails.SLPEarnedToday),
+                                    dal.MakeInputParameters("DATEEARNED", vm.ScholarDetails.DateEarned),
+                                    dal.MakeInputParameters("ISCASHEDOUT", vm.ScholarDetails.IsCashedOut));
+
+                if (result != null)
+                {
+                    var errMessage = result.Rows[0]["ErrorMessage"].ToString();
+                    if (errMessage.ToUpper().Contains("UNIQUE"))
+                    {
+                        MessageBox.Show("There is already an existing entry with the same date! Please check your inputs again.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+                MessageBox.Show("Successfully saved!");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                MessageBox.Show("Something went wrong while saving. Please check the logs.");
+                return false;
+            }
+        }
+
+        public bool Delete(T model)
+        {
+            try
+            {
+                foreach (var item in model.ScholarDetailsList)
+                {
+                    dal.ExecuteDataTable("usp_delete_slp_entry", dal.MakeInputParameters("SCHOLARDETAILID", item.ScholarDetailId));
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
+        }
+
+        public bool Update(T model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

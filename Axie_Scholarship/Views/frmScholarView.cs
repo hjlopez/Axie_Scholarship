@@ -19,14 +19,14 @@ namespace Axie_Scholarship.Views
         Scholar scholar;
         bool hasChange = false;
         bool onLoad = true;
-        ScholarSLPPresenter presenter;
+        ScholarSLPPresenter<ScholarDetailViewModel> presenter;
         ScholarDetailViewModel vm;
         DataTable dt;
         
         public frmScholarView(Scholar s)
         {
             scholar = new Scholar();
-            presenter = new ScholarSLPPresenter();
+            presenter = new ScholarSLPPresenter<ScholarDetailViewModel>();
             vm = new ScholarDetailViewModel();
             this.scholar = s;
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace Axie_Scholarship.Views
         private void LoadDataGrid()
         {
             CreateParameters();
-            dt = presenter.LoadDataGrid(vm);
+            dt = presenter.LoadData(vm);
             dgvScholarDetails.DataSource = dt;
             if (dgvScholarDetails.Columns.Count > 0)
             {
@@ -210,14 +210,15 @@ namespace Axie_Scholarship.Views
 
         private void Delete(DataGridViewSelectedRowCollection rows)
         {
-            if (presenter.ComposeDeleteEntry(rows))
+            vm.ScholarDetailsList = presenter.ComposeDeleteEntry(rows);
+            if (presenter.Delete(vm))
             {
                 MessageBox.Show("Successfully deleted!");
                 LoadDataGrid();
             }
             else
             {
-                MessageBox.Show("Something went wrong during deletion. Please check logs.");
+                MessageBox.Show("Something went wrong during deletion. Please check logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -290,13 +291,13 @@ namespace Axie_Scholarship.Views
                     var result = MessageBox.Show("Some selected items are already cashed out. It will not be included in the next process. Proceed anyway?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (result == DialogResult.Yes)
                     {
-                        var frm = new frmCashOut(rowsNotCashOut, scholar);
+                        var frm = new frmCashOut(rowsNotCashOut, selectedRows, scholar);
                         ret = frm.ShowDialog();
                     }
                 }
                 else
                 {
-                    var frm = new frmCashOut(rowsNotCashOut, scholar);
+                    var frm = new frmCashOut(rowsNotCashOut, selectedRows, scholar);
                     ret = frm.ShowDialog();
                 }
 
@@ -310,8 +311,11 @@ namespace Axie_Scholarship.Views
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            var excelGenerator = new ExcelGenerator();
+            var rows = dgvScholarDetails.SelectedRows;
+            var excelGenerator = new ExcelGenerator(rows, scholar);
             excelGenerator.LoadExcel();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void btnExtras_Click(object sender, EventArgs e)
@@ -322,8 +326,10 @@ namespace Axie_Scholarship.Views
 
         private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
+            dgvScholarDetails.ClearSelection();
             if (chkSelectAll.Checked)
             {
+                chkAll.Checked = false;
                 foreach (DataGridViewRow row in dgvScholarDetails.Rows)
                 {
                     if (!Convert.ToBoolean(row.Cells["Cash Out"].Value))
@@ -333,14 +339,33 @@ namespace Axie_Scholarship.Views
                     
                 }
             }
-            else
+            //else
+            //{
+            //    if (!chkAll.Checked)
+            //    {
+            //        dgvScholarDetails.ClearSelection();
+            //    }
+            //}
+            
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkAll.Checked)
             {
+                chkSelectAll.Checked = false;
                 foreach (DataGridViewRow row in dgvScholarDetails.Rows)
                 {
-                    row.Selected = false;
+                    row.Selected = true;
                 }
             }
-            
+            else
+            {
+                if (!chkSelectAll.Checked)
+                {
+                    dgvScholarDetails.ClearSelection();
+                }
+            }
         }
     }
 }
