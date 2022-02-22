@@ -161,7 +161,11 @@ namespace Axie_Scholarship.Presenters
                                     dal.MakeInputParameters("SLPEND", vm.ScholarDetails.SLPEnd),
                                     dal.MakeInputParameters("SLPEARNED", vm.ScholarDetails.SLPEarnedToday),
                                     dal.MakeInputParameters("DATEEARNED", vm.ScholarDetails.DateEarned),
-                                    dal.MakeInputParameters("ISCASHEDOUT", vm.ScholarDetails.IsCashedOut));
+                                    dal.MakeInputParameters("ISCASHEDOUT", vm.ScholarDetails.IsCashedOut),
+                                    dal.MakeInputParameters("WINS", vm.ScholarDetails.PVPWin),
+                                    dal.MakeInputParameters("LOSE", vm.ScholarDetails.PVPLose),
+                                    dal.MakeInputParameters("DRAWS", vm.ScholarDetails.PVPDraw),
+                                    dal.MakeInputParameters("MMR", vm.ScholarDetails.CurrentMMR));
 
                 if (result != null)
                 {

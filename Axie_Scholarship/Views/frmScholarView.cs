@@ -167,7 +167,7 @@ namespace Axie_Scholarship.Views
 
             foreach (DataGridViewRow item in selectedRows)
             {
-                if (!Convert.ToBoolean(item.Cells[6].Value))
+                if (!Convert.ToBoolean(item.Cells["Cash Out"].Value))
                 {
                     notCashOutCount++;
                 }
@@ -278,7 +278,7 @@ namespace Axie_Scholarship.Views
         {
             DialogResult ret = DialogResult.Yes;
             var selectedRows = dgvScholarDetails.SelectedRows;
-            var rowsNotCashOut = selectedRows.Cast<DataGridViewRow>().Where(s => Convert.ToBoolean(s.Cells[6].Value) == false).ToList();
+            var rowsNotCashOut = selectedRows.Cast<DataGridViewRow>().Where(s => Convert.ToBoolean(s.Cells["Cash Out"].Value) == false).ToList();
             if (selectedRows.Count > 0)
             {
                 // all selected rows are already cashed out

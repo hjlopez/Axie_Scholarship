@@ -202,7 +202,7 @@ namespace Axie_Scholarship.Views
         private async void btnSLPLatest_Click(object sender, EventArgs e)
         {
             var slp = await SLPValue.GetSLPValue();
-            decimal php = slp.market_data.current_price.php;
+            decimal php = Math.Round(slp.market_data.current_price.php, 3);
             lblSLPValue.Text = "SLP Value: Php " + php.ToString();
 
             decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
@@ -212,7 +212,7 @@ namespace Axie_Scholarship.Views
         private async void frmCashOut_Load(object sender, EventArgs e)
         {
             var slp = await SLPValue.GetSLPValue();
-            decimal php = slp.market_data.current_price.php;
+            decimal php = Math.Round(slp.market_data.current_price.php, 3);
             lblSLPValue.Text = "SLP Value: Php " + php.ToString();
 
             decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;

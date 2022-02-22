@@ -15,5 +15,9 @@ namespace Axie_Scholarship.Models
         public int SLPEarnedToday { get; set; }
         public string DateEarned { get; set; }
         public bool IsCashedOut { get; set; }
+        public int PVPWin { get; set; }
+        public int PVPLose { get; set; }
+        public int PVPDraw { get; set; }
+        public int CurrentMMR { get; set; }
     }
 }
