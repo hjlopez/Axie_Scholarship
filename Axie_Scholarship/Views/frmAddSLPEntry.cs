@@ -31,21 +31,9 @@ namespace Axie_Scholarship.Views
             txtSLPEarned.KeyPress += new KeyPressEventHandler(txtSLPEarned_KeyPress);
             txtSLPEarned.TextChanged += new EventHandler(txtSLPEarned_TextChanged);
             txtSLPStart.TextChanged += new EventHandler(txtSLPStart_TextChanged);
-            //txtSLPStart.LostFocus += new EventHandler(txtSLPStart_LostFocus);
             txtSLPEnd.TextChanged += new EventHandler(txtSLPEnd_TextChanged);
-            //txtSLPEnd.LostFocus += new EventHandler(txtSLPEnd_LostFocus);
             txtSLPEarned.LostFocus += new EventHandler(txtSLPEarned_LostFocus);
         }
-
-        //private void txtSLPStart_LostFocus(object sender, EventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //private void txtSLPEnd_LostFocus(object sender, EventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         private void txtSLPEarned_TextChanged(object sender, EventArgs e)
         {
@@ -54,12 +42,6 @@ namespace Axie_Scholarship.Views
 
         private void txtSLPEarned_LostFocus(object sender, EventArgs e)
         {
-            //if (txtSLPEarned.Text == string.Empty || !ExpressionsHelper.NumbersOnly(txtSLPEarned.Text))
-            //{
-            //    MessageBox.Show("Please input numbers only.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    if (txtSLPEarned.Text.Length == 1) txtSLPEarned.Text = "0";
-            //    txtSLPEarned.Focus();
-            //}
         }
 
         private void txtSLPEnd_TextChanged(object sender, EventArgs e)

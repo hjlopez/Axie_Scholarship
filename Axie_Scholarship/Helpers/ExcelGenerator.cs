@@ -99,6 +99,7 @@ namespace Axie_Scholarship.Helpers
 
                 xlWorkBook = xlApp.Workbooks.Add(misValue);
                 xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+                xlWorkSheet.Range["A1", "Z100"].NumberFormat = "@";
 
                 xlWorkSheet = GenerateColumns(xlWorkSheet);
                 xlWorkSheet = GenerateRows(xlWorkSheet);
@@ -190,8 +191,8 @@ namespace Axie_Scholarship.Helpers
                     xlWorkSheet.Cells[8, 12] = "Bonus SLP:  " + (cashOut.ExtraSLP).ToString();
                     xlWorkSheet.Cells[9, 11] = cashOut.TotalSLP;
                     xlWorkSheet.Cells[10, 11] = cashOut.ScholarSLP;
-                    xlWorkSheet.Cells[11, 11] = cashOut.SLPValue;
-                    xlWorkSheet.Cells[12, 11] = cashOut.AmountReceived;
+                    xlWorkSheet.Cells[11, 11] = cashOut.SLPValue.ToString();
+                    xlWorkSheet.Cells[12, 11] = "Php " + cashOut.AmountReceived.ToString();
 
                     xlWorkSheet.Cells[10, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
                     xlWorkSheet.Cells[11, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
@@ -244,16 +245,29 @@ namespace Axie_Scholarship.Helpers
                 {
                     xlWorkSheet.Cells[row, 1].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
 
-                    if (Convert.ToBoolean(item.Cells["Cash Out"].Value))
+                    if (forCashOut) val = "Yes";
+                    else
                     {
-                        val = "Yes";
+                        if (Convert.ToBoolean(item.Cells["Cash Out"].Value))
+                        {
+                            val = "Yes";
+                        }
+                        else val = "No";
                     }
-                    else val = "No";
+                    
 
                     xlWorkSheet.Cells[row, 1] = item.Cells["Earned SLP"].Value;
                     xlWorkSheet.Cells[row, 2] = item.Cells["Date Earned"].Value;
-                    xlWorkSheet.Cells[row, 3] = "N/A";
-                    xlWorkSheet.Cells[row, 4] = "N/A";
+
+                    if (item.Cells["Record"].Value.ToString() != "0-0-0")
+                    {
+                        xlWorkSheet.Cells[row, 3] = item.Cells["Record"].Value.ToString();
+                    } else xlWorkSheet.Cells[row, 3] = "N/A";
+
+                    if (item.Cells["MMR"].Value.ToString() != "0")
+                    {
+                        xlWorkSheet.Cells[row, 4] = item.Cells["MMR"].Value.ToString();
+                    } else xlWorkSheet.Cells[row, 4] = "N/A";
 
                     if (item.Cells["SLP End"].Value.ToString() == "0")
                     {

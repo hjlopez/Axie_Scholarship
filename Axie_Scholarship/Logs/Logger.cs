@@ -18,7 +18,7 @@ namespace Axie_Scholarship.Logs
             // or: Directory.GetCurrentDirectory() gives the same result
 
             // This will get the current PROJECT directory
-            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName + "\\Error Logs";
+            string projectDirectory = "C:\\Axie Logs";
             Directory.CreateDirectory(projectDirectory);
             try
             {
