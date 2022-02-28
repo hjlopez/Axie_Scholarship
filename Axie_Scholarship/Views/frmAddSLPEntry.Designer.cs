@@ -260,7 +260,6 @@
             this.MinimizeBox = false;
             this.Name = "frmAddSLPEntry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "0";
             this.ResumeLayout(false);
             this.PerformLayout();
 

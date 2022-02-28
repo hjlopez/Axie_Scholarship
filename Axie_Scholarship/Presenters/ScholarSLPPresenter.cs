@@ -155,7 +155,17 @@ namespace Axie_Scholarship.Presenters
         {
             try
             {
-                var result = dal.ExecuteDataTable("usp_insert_slp_entry",
+                var result = dal.ExecuteDataTable("usp_chk_if_date_exists_for_scholar",
+                                    dal.MakeInputParameters("SCHOLARID", vm.ScholarDetails.ScholarId),
+                                    dal.MakeInputParameters("DATEEARNED", vm.ScholarDetails.DateEarned));
+
+                if (result != null)
+                {
+                    MessageBox.Show("There is already an existing entry with the same date! Please check your inputs again.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                dal.ExecuteDataTable("usp_insert_slp_entry",
                                     dal.MakeInputParameters("SCHOLARID", vm.ScholarDetails.ScholarId),
                                     dal.MakeInputParameters("SLPSTART", vm.ScholarDetails.SLPStart),
                                     dal.MakeInputParameters("SLPEND", vm.ScholarDetails.SLPEnd),
@@ -167,15 +177,7 @@ namespace Axie_Scholarship.Presenters
                                     dal.MakeInputParameters("DRAWS", vm.ScholarDetails.PVPDraw),
                                     dal.MakeInputParameters("MMR", vm.ScholarDetails.CurrentMMR));
 
-                if (result != null)
-                {
-                    var errMessage = result.Rows[0]["ErrorMessage"].ToString();
-                    if (errMessage.ToUpper().Contains("UNIQUE"))
-                    {
-                        MessageBox.Show("There is already an existing entry with the same date! Please check your inputs again.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                }
+               
                 MessageBox.Show("Successfully saved!");
                 return true;
             }
