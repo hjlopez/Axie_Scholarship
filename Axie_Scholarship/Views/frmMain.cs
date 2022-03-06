@@ -45,5 +45,11 @@ namespace Axie_Scholarship
                 frm.ShowDialog();
             }
         }
+
+        private void btnAccomp_Click(object sender, EventArgs e)
+        {
+            var frm = new frmAccomplishments();
+            frm.ShowDialog();
+        }
     }
 }

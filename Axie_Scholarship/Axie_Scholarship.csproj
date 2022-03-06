@@ -55,22 +55,40 @@
   <ItemGroup>
     <Compile Include="API\SLPValue.cs" />
     <Compile Include="Connection\GetConnection.cs" />
+    <Compile Include="Constants\DescriptionConstants.cs" />
     <Compile Include="DataAccess\DataAccessLayer.cs" />
     <Compile Include="Helpers\ConversionHelper.cs" />
     <Compile Include="Helpers\ExcelGenerator.cs" />
     <Compile Include="Helpers\ExpressionsHelper.cs" />
+    <Compile Include="Interface\IAccomplishment.cs" />
     <Compile Include="Interface\IData.cs" />
     <Compile Include="Logs\Logger.cs" />
+    <Compile Include="Models\Accomplishments.cs" />
     <Compile Include="Models\CashOut.cs" />
     <Compile Include="Models\ExtraSLP.cs" />
     <Compile Include="Models\Scholar.cs" />
     <Compile Include="Models\ScholarDetails.cs" />
+    <Compile Include="Presenters\AccomplishmentCheckerPresenter.cs" />
+    <Compile Include="Presenters\AccomplishmentPresenter.cs" />
     <Compile Include="Presenters\ExtrasPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\ScholarSLPPresenter.cs" />
+    <Compile Include="ViewModels\AccomplishmentViewModel.cs" />
     <Compile Include="ViewModels\ExtraSLPViewModel.cs" />
     <Compile Include="ViewModels\ScholarDetailViewModel.cs" />
     <Compile Include="ViewModels\SLPCoinViewModel.cs" />
+    <Compile Include="Views\Accomplishments\frmAccomplishments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Accomplishments\frmAccomplishments.Designer.cs">
+      <DependentUpon>frmAccomplishments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Accomplishments\frmAddAccomplishment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Accomplishments\frmAddAccomplishment.Designer.cs">
+      <DependentUpon>frmAddAccomplishment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\frmAddOrSubtractSLP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +127,12 @@
     <Compile Include="Views\frmScholarView.Designer.cs">
       <DependentUpon>frmScholarView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Accomplishments\frmAccomplishments.resx">
+      <DependentUpon>frmAccomplishments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Accomplishments\frmAddAccomplishment.resx">
+      <DependentUpon>frmAddAccomplishment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\frmAddOrSubtractSLP.resx">
       <DependentUpon>frmAddOrSubtractSLP.cs</DependentUpon>
     </EmbeddedResource>

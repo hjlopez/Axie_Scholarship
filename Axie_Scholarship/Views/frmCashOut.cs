@@ -24,6 +24,7 @@ namespace Axie_Scholarship.Views
         string minDate = "";
         string maxDate = "";
         string origSLP = "";
+        int reward = 0;
         public frmCashOut(List<DataGridViewRow> rows, DataGridViewSelectedRowCollection r2, Scholar scholar)
         {
             InitializeComponent();
@@ -34,8 +35,49 @@ namespace Axie_Scholarship.Views
             GetMinAndMaxDate();
             LoadDetails();
             DetermineMissingDates();
+            LoadAccomplishments();
             if (lblAdjSLP.Text == "0") chkApply.Enabled = false; 
             else chkApply.Enabled = true;
+        }
+
+        private void LoadAccomplishments()
+        {
+            EditColumns();
+            var dt = presenter.GetAccomplishments();
+            var p = new AccomplishmentPresenter<Models.Accomplishments>("");
+
+            // populate tabs
+            foreach (DataRow row in dt.Rows)
+            {
+                
+                if (!Convert.ToBoolean(row["IsPenalty"]))
+                {
+                    // check if entry is accomplished
+                    if (p.IsAccomplished(row["Description"].ToString(), rowCollection))
+                    {
+                        int value = Convert.ToBoolean(row["IsPercent"]) ? Convert.ToInt32(Convert.ToInt32(lblTotalSLP.Text) * Convert.ToDecimal(row["Reward"])) : Convert.ToInt32(row["Reward"].ToString());
+                        dgvBonus.Rows.Add(row["Name"], value, true);
+                        reward += value;
+                        lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + reward).ToString();
+                    }
+                    
+                }
+            }
+        }
+
+        private void EditColumns()
+        {
+            dgvBonus.Columns[0].ReadOnly = true;
+            dgvBonus.Columns[1].ReadOnly = true;
+            dgvBonus.Columns[2].ReadOnly = false;
+
+            dgvPenalty.Columns[0].ReadOnly = true;
+            dgvPenalty.Columns[1].ReadOnly = true;
+            dgvPenalty.Columns[2].ReadOnly = false;
+
+            dgvOthers.Columns[0].ReadOnly = true;
+            dgvOthers.Columns[1].ReadOnly = true;
+            dgvOthers.Columns[2].ReadOnly = false;
         }
 
         private void LoadDetails(bool withAdj = false)
@@ -59,7 +101,7 @@ namespace Axie_Scholarship.Views
             
             lblScholarSLP.Text = (Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100)).ToString();
 
-            lblAdjSLP.Text = presenter.GetScholarExtrasById(scholar.ScholarId).ToString();
+            lblAdjSLP.Text = (presenter.GetScholarExtrasById(scholar.ScholarId) + reward).ToString();
 
             frmCashOut_Load(null, null);
         }

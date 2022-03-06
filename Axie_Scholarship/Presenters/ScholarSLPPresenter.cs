@@ -211,5 +211,21 @@ namespace Axie_Scholarship.Presenters
         {
             throw new NotImplementedException();
         }
+
+        public DataTable GetAccomplishments()
+        {
+            DataTable dt = null;
+            try
+            {
+                dt = dal.ExecuteDataTable("usp_get_accomplishments");
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+
+            return dt;
+        }
     }
 }
