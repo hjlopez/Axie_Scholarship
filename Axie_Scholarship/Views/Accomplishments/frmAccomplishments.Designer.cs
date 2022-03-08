@@ -28,31 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle71 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle76 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle77 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbView = new System.Windows.Forms.TabControl();
             this.tbBonus = new System.Windows.Forms.TabPage();
-            this.dgvBonus = new System.Windows.Forms.DataGridView();
             this.tbDeduct = new System.Windows.Forms.TabPage();
-            this.dgvDeductions = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAddPenalty = new System.Windows.Forms.Button();
             this.btnEditPenalty = new System.Windows.Forms.Button();
             this.btnDeletePenalty = new System.Windows.Forms.Button();
+            this.dgvBonus = new System.Windows.Forms.DataGridView();
+            this.colIDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNameB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescriptionB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRewardB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDeductions = new System.Windows.Forms.DataGridView();
+            this.colIDDeduction = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNameD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescriptionD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRewardD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tbView.SuspendLayout();
             this.tbBonus.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBonus)).BeginInit();
             this.tbDeduct.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBonus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDeductions)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +65,7 @@
             this.tbView.Location = new System.Drawing.Point(31, 12);
             this.tbView.Name = "tbView";
             this.tbView.SelectedIndex = 0;
-            this.tbView.Size = new System.Drawing.Size(419, 426);
+            this.tbView.Size = new System.Drawing.Size(758, 426);
             this.tbView.TabIndex = 0;
             // 
             // tbBonus
@@ -72,54 +74,10 @@
             this.tbBonus.Location = new System.Drawing.Point(4, 22);
             this.tbBonus.Name = "tbBonus";
             this.tbBonus.Padding = new System.Windows.Forms.Padding(3);
-            this.tbBonus.Size = new System.Drawing.Size(411, 400);
+            this.tbBonus.Size = new System.Drawing.Size(750, 400);
             this.tbBonus.TabIndex = 0;
             this.tbBonus.Text = "Bonuses";
             this.tbBonus.UseVisualStyleBackColor = true;
-            // 
-            // dgvBonus
-            // 
-            this.dgvBonus.AllowUserToAddRows = false;
-            this.dgvBonus.AllowUserToDeleteRows = false;
-            this.dgvBonus.AllowUserToResizeColumns = false;
-            this.dgvBonus.AllowUserToResizeRows = false;
-            dataGridViewCellStyle71.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvBonus.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle71;
-            this.dgvBonus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle72.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle72.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle72.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle72.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle72.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle72.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle72.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBonus.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle72;
-            this.dgvBonus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle73.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle73.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle73.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle73.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle73.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle73.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle73.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvBonus.DefaultCellStyle = dataGridViewCellStyle73;
-            this.dgvBonus.Location = new System.Drawing.Point(6, 6);
-            this.dgvBonus.Name = "dgvBonus";
-            this.dgvBonus.ReadOnly = true;
-            dataGridViewCellStyle74.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle74.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle74.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle74.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle74.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle74.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle74.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBonus.RowHeadersDefaultCellStyle = dataGridViewCellStyle74;
-            this.dgvBonus.RowHeadersVisible = false;
-            dataGridViewCellStyle75.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvBonus.RowsDefaultCellStyle = dataGridViewCellStyle75;
-            this.dgvBonus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBonus.Size = new System.Drawing.Size(399, 388);
-            this.dgvBonus.TabIndex = 7;
             // 
             // tbDeduct
             // 
@@ -127,59 +85,15 @@
             this.tbDeduct.Location = new System.Drawing.Point(4, 22);
             this.tbDeduct.Name = "tbDeduct";
             this.tbDeduct.Padding = new System.Windows.Forms.Padding(3);
-            this.tbDeduct.Size = new System.Drawing.Size(411, 400);
+            this.tbDeduct.Size = new System.Drawing.Size(750, 400);
             this.tbDeduct.TabIndex = 1;
             this.tbDeduct.Text = "Deductions";
             this.tbDeduct.UseVisualStyleBackColor = true;
             // 
-            // dgvDeductions
-            // 
-            this.dgvDeductions.AllowUserToAddRows = false;
-            this.dgvDeductions.AllowUserToDeleteRows = false;
-            this.dgvDeductions.AllowUserToResizeColumns = false;
-            this.dgvDeductions.AllowUserToResizeRows = false;
-            dataGridViewCellStyle76.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvDeductions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle76;
-            this.dgvDeductions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle77.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle77.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle77.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle77.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle77.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle77.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle77.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDeductions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle77;
-            this.dgvDeductions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle78.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle78.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle78.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle78.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle78.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle78.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle78.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvDeductions.DefaultCellStyle = dataGridViewCellStyle78;
-            this.dgvDeductions.Location = new System.Drawing.Point(6, 6);
-            this.dgvDeductions.Name = "dgvDeductions";
-            this.dgvDeductions.ReadOnly = true;
-            dataGridViewCellStyle79.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle79.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle79.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle79.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle79.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle79.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle79.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDeductions.RowHeadersDefaultCellStyle = dataGridViewCellStyle79;
-            this.dgvDeductions.RowHeadersVisible = false;
-            dataGridViewCellStyle80.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvDeductions.RowsDefaultCellStyle = dataGridViewCellStyle80;
-            this.dgvDeductions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDeductions.Size = new System.Drawing.Size(399, 388);
-            this.dgvDeductions.TabIndex = 8;
-            // 
             // btnAdd
             // 
             this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAdd.Location = new System.Drawing.Point(476, 58);
+            this.btnAdd.Location = new System.Drawing.Point(795, 56);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(146, 67);
             this.btnAdd.TabIndex = 1;
@@ -190,7 +104,7 @@
             // btnEdit
             // 
             this.btnEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEdit.Location = new System.Drawing.Point(476, 193);
+            this.btnEdit.Location = new System.Drawing.Point(795, 191);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(146, 67);
             this.btnEdit.TabIndex = 2;
@@ -200,7 +114,7 @@
             // btnDelete
             // 
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDelete.Location = new System.Drawing.Point(476, 334);
+            this.btnDelete.Location = new System.Drawing.Point(795, 332);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(146, 67);
             this.btnDelete.TabIndex = 3;
@@ -210,7 +124,7 @@
             // btnAddPenalty
             // 
             this.btnAddPenalty.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddPenalty.Location = new System.Drawing.Point(655, 58);
+            this.btnAddPenalty.Location = new System.Drawing.Point(974, 56);
             this.btnAddPenalty.Name = "btnAddPenalty";
             this.btnAddPenalty.Size = new System.Drawing.Size(146, 67);
             this.btnAddPenalty.TabIndex = 4;
@@ -220,7 +134,7 @@
             // btnEditPenalty
             // 
             this.btnEditPenalty.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEditPenalty.Location = new System.Drawing.Point(655, 193);
+            this.btnEditPenalty.Location = new System.Drawing.Point(974, 191);
             this.btnEditPenalty.Name = "btnEditPenalty";
             this.btnEditPenalty.Size = new System.Drawing.Size(146, 67);
             this.btnEditPenalty.TabIndex = 5;
@@ -230,18 +144,142 @@
             // btnDeletePenalty
             // 
             this.btnDeletePenalty.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDeletePenalty.Location = new System.Drawing.Point(655, 334);
+            this.btnDeletePenalty.Location = new System.Drawing.Point(974, 332);
             this.btnDeletePenalty.Name = "btnDeletePenalty";
             this.btnDeletePenalty.Size = new System.Drawing.Size(146, 67);
             this.btnDeletePenalty.TabIndex = 6;
             this.btnDeletePenalty.Text = "Delete Penalties";
             this.btnDeletePenalty.UseVisualStyleBackColor = true;
             // 
+            // dgvBonus
+            // 
+            this.dgvBonus.AllowUserToAddRows = false;
+            this.dgvBonus.AllowUserToDeleteRows = false;
+            this.dgvBonus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvBonus.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBonus.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvBonus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBonus.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colIDB,
+            this.colNameB,
+            this.colDescriptionB,
+            this.colRewardB});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBonus.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvBonus.Location = new System.Drawing.Point(3, 6);
+            this.dgvBonus.MultiSelect = false;
+            this.dgvBonus.Name = "dgvBonus";
+            this.dgvBonus.ReadOnly = true;
+            this.dgvBonus.RowHeadersVisible = false;
+            this.dgvBonus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvBonus.Size = new System.Drawing.Size(744, 388);
+            this.dgvBonus.TabIndex = 0;
+            // 
+            // colIDB
+            // 
+            this.colIDB.HeaderText = "Id";
+            this.colIDB.Name = "colIDB";
+            this.colIDB.ReadOnly = true;
+            this.colIDB.Visible = false;
+            // 
+            // colNameB
+            // 
+            this.colNameB.HeaderText = "Name";
+            this.colNameB.Name = "colNameB";
+            this.colNameB.ReadOnly = true;
+            // 
+            // colDescriptionB
+            // 
+            this.colDescriptionB.HeaderText = "Description";
+            this.colDescriptionB.Name = "colDescriptionB";
+            this.colDescriptionB.ReadOnly = true;
+            // 
+            // colRewardB
+            // 
+            this.colRewardB.HeaderText = "Reward";
+            this.colRewardB.Name = "colRewardB";
+            this.colRewardB.ReadOnly = true;
+            // 
+            // dgvDeductions
+            // 
+            this.dgvDeductions.AllowUserToAddRows = false;
+            this.dgvDeductions.AllowUserToDeleteRows = false;
+            this.dgvDeductions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDeductions.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDeductions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvDeductions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDeductions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colIDDeduction,
+            this.colNameD,
+            this.colDescriptionD,
+            this.colRewardD});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDeductions.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvDeductions.Location = new System.Drawing.Point(5, 6);
+            this.dgvDeductions.MultiSelect = false;
+            this.dgvDeductions.Name = "dgvDeductions";
+            this.dgvDeductions.ReadOnly = true;
+            this.dgvDeductions.RowHeadersVisible = false;
+            this.dgvDeductions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDeductions.Size = new System.Drawing.Size(744, 388);
+            this.dgvDeductions.TabIndex = 1;
+            // 
+            // colIDDeduction
+            // 
+            this.colIDDeduction.HeaderText = "Id";
+            this.colIDDeduction.Name = "colIDDeduction";
+            this.colIDDeduction.ReadOnly = true;
+            this.colIDDeduction.Visible = false;
+            // 
+            // colNameD
+            // 
+            this.colNameD.HeaderText = "Name";
+            this.colNameD.Name = "colNameD";
+            this.colNameD.ReadOnly = true;
+            // 
+            // colDescriptionD
+            // 
+            this.colDescriptionD.HeaderText = "Description";
+            this.colDescriptionD.Name = "colDescriptionD";
+            this.colDescriptionD.ReadOnly = true;
+            // 
+            // colRewardD
+            // 
+            this.colRewardD.HeaderText = "Reward";
+            this.colRewardD.Name = "colRewardD";
+            this.colRewardD.ReadOnly = true;
+            // 
             // frmAccomplishments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(837, 450);
+            this.ClientSize = new System.Drawing.Size(1142, 450);
             this.Controls.Add(this.btnDeletePenalty);
             this.Controls.Add(this.btnEditPenalty);
             this.Controls.Add(this.btnAddPenalty);
@@ -257,8 +295,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.tbView.ResumeLayout(false);
             this.tbBonus.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBonus)).EndInit();
             this.tbDeduct.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBonus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDeductions)).EndInit();
             this.ResumeLayout(false);
 
@@ -269,13 +307,21 @@
         private System.Windows.Forms.TabControl tbView;
         private System.Windows.Forms.TabPage tbBonus;
         private System.Windows.Forms.TabPage tbDeduct;
-        public System.Windows.Forms.DataGridView dgvBonus;
-        public System.Windows.Forms.DataGridView dgvDeductions;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnAddPenalty;
         private System.Windows.Forms.Button btnEditPenalty;
         private System.Windows.Forms.Button btnDeletePenalty;
+        private System.Windows.Forms.DataGridView dgvBonus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIDB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNameB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescriptionB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRewardB;
+        private System.Windows.Forms.DataGridView dgvDeductions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIDDeduction;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNameD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescriptionD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colRewardD;
     }
 }

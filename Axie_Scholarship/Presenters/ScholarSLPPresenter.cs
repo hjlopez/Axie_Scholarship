@@ -120,9 +120,12 @@ namespace Axie_Scholarship.Presenters
             try
             {
                 var dt = dal.ExecuteDataTable("usp_get_extras_scholar_byId", dal.MakeInputParameters("SCHOLARID", scholarId));
-                foreach (DataRow item in dt.Rows)
+                if (dt != null)
                 {
-                    slp += Convert.ToInt32(item["SLPValue"]);
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        slp += Convert.ToInt32(item["SLPValue"]);
+                    }
                 }
                 return slp;
             }
@@ -211,21 +214,6 @@ namespace Axie_Scholarship.Presenters
         {
             throw new NotImplementedException();
         }
-
-        public DataTable GetAccomplishments()
-        {
-            DataTable dt = null;
-            try
-            {
-                dt = dal.ExecuteDataTable("usp_get_accomplishments");
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-
-            return dt;
-        }
+        
     }
 }

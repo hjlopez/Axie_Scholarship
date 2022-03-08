@@ -38,13 +38,17 @@ namespace Axie_Scholarship.Views
             LoadAccomplishments();
             if (lblAdjSLP.Text == "0") chkApply.Enabled = false; 
             else chkApply.Enabled = true;
+
+            dgvBonus.CellContentClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
+            dgvPenalty.CellContentClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
+            dgvOthers.CellContentClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
         }
 
         private void LoadAccomplishments()
         {
             EditColumns();
-            var dt = presenter.GetAccomplishments();
             var p = new AccomplishmentPresenter<Models.Accomplishments>("");
+            var dt = p.LoadData(null);
 
             // populate tabs
             foreach (DataRow row in dt.Rows)
@@ -55,10 +59,10 @@ namespace Axie_Scholarship.Views
                     // check if entry is accomplished
                     if (p.IsAccomplished(row["Description"].ToString(), rowCollection))
                     {
-                        int value = Convert.ToBoolean(row["IsPercent"]) ? Convert.ToInt32(Convert.ToInt32(lblTotalSLP.Text) * Convert.ToDecimal(row["Reward"])) : Convert.ToInt32(row["Reward"].ToString());
+                        int value = Convert.ToBoolean(row["IsPercent"]) ? Convert.ToInt32(Convert.ToInt32(lblTotalSLP.Text) * Convert.ToDecimal(row["Reward"])) : Convert.ToInt32(row["Reward"]);
                         dgvBonus.Rows.Add(row["Name"], value, true);
                         reward += value;
-                        lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + reward).ToString();
+                        lblAdjSLP.Text = (reward).ToString();
                     }
                     
                 }
@@ -244,21 +248,68 @@ namespace Axie_Scholarship.Views
         private async void btnSLPLatest_Click(object sender, EventArgs e)
         {
             var slp = await SLPValue.GetSLPValue();
-            decimal php = Math.Round(slp.market_data.current_price.php, 3);
-            lblSLPValue.Text = "SLP Value: Php " + php.ToString();
+            if (slp != null)
+            {
+                decimal php = Math.Round(slp.market_data.current_price.php, 3);
+                lblSLPValue.Text = "SLP Value: Php " + php.ToString();
 
-            decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
-            lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+                decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
+                lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+            }
         }
 
         private async void frmCashOut_Load(object sender, EventArgs e)
         {
             var slp = await SLPValue.GetSLPValue();
-            decimal php = Math.Round(slp.market_data.current_price.php, 3);
-            lblSLPValue.Text = "SLP Value: Php " + php.ToString();
+            if (slp != null)
+            {
+                decimal php = Math.Round(slp.market_data.current_price.php, 3);
+                lblSLPValue.Text = "SLP Value: Php " + php.ToString();
 
-            decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
-            lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+                decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
+                lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+            }
+        }
+
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row;
+            // determine checkbox status
+            if (e.RowIndex >= 0 && e.ColumnIndex == 2)
+            {
+                if (tbExtras.SelectedTab == tbExtras.TabPages["tbBonus"])
+                {
+                    dgvBonus.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                    row = dgvBonus.Rows[e.RowIndex];
+                }
+                else if (tbExtras.SelectedTab == tbExtras.TabPages["tbPenalty"])
+                {
+                    dgvPenalty.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                    row = dgvPenalty.Rows[e.RowIndex];
+                }
+                else
+                {
+                    dgvOthers.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                    row = dgvOthers.Rows[e.RowIndex];
+                }
+
+                // check value 
+                if (Convert.ToBoolean(row.Cells[2].Value))
+                {
+                    lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                    reward += Convert.ToInt32(row.Cells[1].Value.ToString());
+                }
+                else
+                {
+                    lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) - Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                    reward -= Convert.ToInt32(row.Cells[1].Value.ToString());
+                }
+
+                if (chkApply.Checked)
+                {
+                    lblTotalSLP.Text = (Convert.ToInt32(origSLP) + Convert.ToInt32(lblAdjSLP.Text)).ToString();
+                }
+            }
         }
     }
 }

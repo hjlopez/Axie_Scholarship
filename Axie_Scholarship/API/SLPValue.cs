@@ -40,7 +40,7 @@ namespace Axie_Scholarship.API
             catch (Exception ex)
             {
                 Logger.WriteLog(ex);
-                MessageBox.Show("Something went wrong with the request. Please check the logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Something went wrong with the SLP API request. Please check the logs at C:\\Axie_Logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
 
