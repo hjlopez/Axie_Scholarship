@@ -45,7 +45,8 @@ namespace Axie_Scholarship.Presenters
                     DateAdded = srv["DateStarted"].ToString(),
                     IsActive = Convert.ToBoolean(srv["IsActive"]),
                     CutOffDays = Convert.ToInt32(srv["CutOff"]),
-                    ScholarCut = Convert.ToInt32(srv["ScholarCut"])
+                    ScholarCut = Convert.ToInt32(srv["ScholarCut"]),
+                    IsSLPCashout = Convert.ToBoolean(srv["IsSLPCashout"])
                 };
             }
             catch (Exception ex)

@@ -21,10 +21,13 @@ namespace Axie_Scholarship.Views
         Scholar scholar;
         ScholarSLPPresenter<ScholarDetailViewModel> presenter;
         DataGridViewSelectedRowCollection r;
+        SLPCoinViewModel slp;
         string minDate = "";
         string maxDate = "";
         string origSLP = "";
         int reward = 0;
+        decimal php = 0;
+        decimal amt = 0;
         public frmCashOut(List<DataGridViewRow> rows, DataGridViewSelectedRowCollection r2, Scholar scholar)
         {
             InitializeComponent();
@@ -32,12 +35,21 @@ namespace Axie_Scholarship.Views
             this.scholar = scholar;
             this.r = r2;
             presenter = new ScholarSLPPresenter<ScholarDetailViewModel>();
+            chkSLPCashOut.Checked = this.scholar.IsSLPCashout;
             GetMinAndMaxDate();
             LoadDetails();
             DetermineMissingDates();
             LoadAccomplishments();
-            if (lblAdjSLP.Text == "0") chkApply.Enabled = false; 
-            else chkApply.Enabled = true;
+            if (this.scholar.IsSLPCashout)
+            {
+                chkApply.Enabled = false;
+            }
+            else
+            {
+                if (lblAdjSLP.Text == "0") chkApply.Enabled = false;
+                else chkApply.Enabled = true;
+            }
+            
 
             dgvBonus.CellContentClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
             dgvPenalty.CellContentClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
@@ -62,11 +74,22 @@ namespace Axie_Scholarship.Views
                         int value = Convert.ToBoolean(row["IsPercent"]) ? Convert.ToInt32(Convert.ToInt32(lblTotalSLP.Text) * Convert.ToDecimal(row["Reward"])) : Convert.ToInt32(row["Reward"]);
                         dgvBonus.Rows.Add(row["Name"], value, true);
                         reward += value;
-                        lblAdjSLP.Text = (reward).ToString();
+                        
                     }
                     
                 }
             }
+            lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + (reward)).ToString();
+            // get manual rewards
+            var dtManualRewards = presenter.GetScholarExtrasForExcelGeneration(scholar.ScholarId);
+            if (dtManualRewards != null)
+            {
+                foreach (DataRow data in dtManualRewards.Rows)
+                {
+                    dgvOthers.Rows.Add(data["Reason"], data["SLPValue"], true);
+                }
+            }
+           
         }
 
         private void EditColumns()
@@ -102,8 +125,10 @@ namespace Axie_Scholarship.Views
             {
                 lblTotalSLP.Text = origSLP;
             }
-            
-            lblScholarSLP.Text = (Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100)).ToString();
+
+            lblScholarSLP.Text = chkSLPCashOut.Checked ?
+                (Convert.ToInt32(Math.Floor(Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100))).ToString()) :
+                (Convert.ToInt32(lblTotalSLP.Text) * (Convert.ToDecimal(share) / 100)).ToString();
 
             lblAdjSLP.Text = (presenter.GetScholarExtrasById(scholar.ScholarId) + reward).ToString();
 
@@ -196,15 +221,17 @@ namespace Axie_Scholarship.Views
             var success = presenter.CashOutSLP(rowCollection, chkApply.Checked, scholar.ScholarId, cashOut);
             if (success)
             {
+                cashOut.SLPBalance = presenter.GetBalanceSLP(scholar.ScholarId);
                 MessageBox.Show("Cash out successful!");
                 if (chkExcel.Checked)
                 {
-                    var excel = new ExcelGenerator(r, scholar, true, cashOut);
+                    var allRewards = CheckRewards();
+                    var excel = new ExcelGenerator(r, scholar, allRewards, true, cashOut);
                     excel.LoadExcel();
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                 }
-                
+
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
@@ -214,6 +241,47 @@ namespace Axie_Scholarship.Views
             }
         }
 
+        private DataTable CheckRewards()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("SLP Amount");
+            dt.Columns.Add("Date Acquired");
+            dt.Columns.Add("Reason");
+
+            if (chkSLPCashOut.Checked || chkApply.Checked)
+            {
+                if (dgvOthers.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in dgvOthers.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[2].Value))
+                            dt.Rows.Add(row.Cells[1].Value, DateTime.Now.Date.ToShortDateString(), row.Cells[0].Value);
+                    }
+                }
+
+                if (dgvBonus.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in dgvBonus.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[2].Value))
+                            dt.Rows.Add(row.Cells[1].Value, DateTime.Now.Date.ToShortDateString(), row.Cells[0].Value);
+                    }
+                }
+
+                if (dgvPenalty.Rows.Count > 0)
+                {
+                    foreach (DataGridViewRow row in dgvBonus.Rows)
+                    {
+                        if (Convert.ToBoolean(row.Cells[2].Value))
+                            dt.Rows.Add(row.Cells[1].Value, DateTime.Now.Date.ToShortDateString(), row.Cells[0].Value);
+                    }
+                }
+            }
+
+
+            return dt;
+        }
+
         private CashOut GenerateHistory()
         {
             var cashOut = new CashOut();
@@ -221,33 +289,33 @@ namespace Axie_Scholarship.Views
             cashOut.TotalSLP = Convert.ToInt32(lblTotalSLP.Text);
             cashOut.ScholarSLP = Convert.ToDecimal(lblScholarSLP.Text);
 
-            if (chkApply.Checked)
+            if (chkApply.Checked || chkSLPCashOut.Checked)
             {
                 cashOut.ExtraSLP = Convert.ToInt32(lblAdjSLP.Text);
             }
            
             cashOut.CashOutDate = DateTime.Now.ToShortDateString();
             cashOut.SLPValue = Convert.ToDecimal(lblSLPValue.Text.Substring(lblSLPValue.Text.IndexOf("Php ") + 4));
-            cashOut.AmountReceived = Convert.ToDecimal(lblConvert.Text.Substring(lblConvert.Text.IndexOf("Php ")+4));
+            cashOut.AmountReceived = Convert.ToDecimal(lblConvert.Text.Substring(lblConvert.Text.IndexOf("Php ") + 4));
+            cashOut.IsSlpCashOut = chkSLPCashOut.Checked;
+
+            // if cash, automatic applied
+            if (Convert.ToInt32(lblAdjSLP.Text) == 0 || (!chkSLPCashOut.Checked))
+                cashOut.IsExtraSLPApplied = true;
+            else
+                cashOut.IsExtraSLPApplied = false;
 
             return cashOut;
         }
 
         private void chkApply_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkApply.Checked)
-            {
-                LoadDetails(true);
-            }
-            else
-            {
-                LoadDetails(false);
-            }
+            LoadDetails(chkApply.Checked);
         }
 
         private async void btnSLPLatest_Click(object sender, EventArgs e)
         {
-            var slp = await SLPValue.GetSLPValue();
+            slp = await SLPValue.GetSLPValue();
             if (slp != null)
             {
                 decimal php = Math.Round(slp.market_data.current_price.php, 3);
@@ -260,15 +328,22 @@ namespace Axie_Scholarship.Views
 
         private async void frmCashOut_Load(object sender, EventArgs e)
         {
-            var slp = await SLPValue.GetSLPValue();
-            if (slp != null)
+            if (chkSLPCashOut.Checked)
+                lblConvert.Text = "Scholar Receives: Php 0.00";
+            else
             {
-                decimal php = Math.Round(slp.market_data.current_price.php, 3);
-                lblSLPValue.Text = "SLP Value: Php " + php.ToString();
+                slp = await SLPValue.GetSLPValue();
+                if (slp != null)
+                {
+                    php = Math.Round(slp.market_data.current_price.php, 3);
+                    lblSLPValue.Text = "SLP Value: Php " + php.ToString();
 
-                decimal amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
-                lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+                    amt = Convert.ToDecimal(lblScholarSLP.Text) * php;
+                    lblConvert.Text = "Scholar Receives: Php " + string.Format("{0:#.00}", Convert.ToDecimal(amt));
+                }
             }
+            
+            //chkSLPCashOut.Checked = this.scholar.IsSLPCashout;
         }
 
         private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -310,6 +385,14 @@ namespace Axie_Scholarship.Views
                     lblTotalSLP.Text = (Convert.ToInt32(origSLP) + Convert.ToInt32(lblAdjSLP.Text)).ToString();
                 }
             }
+        }
+
+        private void chkSLPCashOut_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadDetails(chkApply.Checked);
+            btnSLPLatest.Enabled = !chkSLPCashOut.Checked;
+            chkApply.Checked = chkSLPCashOut.Checked ? false : chkApply.Checked;
+            chkApply.Enabled = !chkSLPCashOut.Checked;
         }
     }
 }

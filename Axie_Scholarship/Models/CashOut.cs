@@ -16,5 +16,8 @@ namespace Axie_Scholarship.Models
         public string CashOutDate { get; set; }
         public decimal SLPValue { get; set; }
         public decimal AmountReceived { get; set; }
+        public bool IsSlpCashOut { get; set; }
+        public bool IsExtraSLPApplied { get; set; }
+        public int SLPBalance { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace Axie_Scholarship.Models
         public bool IsActive { get; set; }
         public int CutOffDays { get; set; }
         public int ScholarCut { get; set; }
+        public bool IsSLPCashout { get; set; }
     }
 }

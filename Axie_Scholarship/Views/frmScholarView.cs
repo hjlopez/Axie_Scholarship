@@ -312,7 +312,7 @@ namespace Axie_Scholarship.Views
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             var rows = dgvScholarDetails.SelectedRows;
-            var excelGenerator = new ExcelGenerator(rows, scholar);
+            var excelGenerator = new ExcelGenerator(rows, scholar, null);
             excelGenerator.LoadExcel();
             GC.Collect();
             GC.WaitForPendingFinalizers();

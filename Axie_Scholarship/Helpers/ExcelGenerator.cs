@@ -18,18 +18,20 @@ namespace Axie_Scholarship.Helpers
         DataGridViewSelectedRowCollection rows;
         Scholar scholar;
         CashOut cashOut = null;
+        DataTable allRewards = null;
         string minDate;
         string maxDate;
         int row = 2;
         bool forCashOut = false;
 
         Color darkGreen = Color.DarkSeaGreen;
-        public ExcelGenerator(DataGridViewSelectedRowCollection rows, Scholar scholar, bool forCashOut = false, CashOut cashOut = null)
+        public ExcelGenerator(DataGridViewSelectedRowCollection rows, Scholar scholar, DataTable allRewards, bool forCashOut = false, CashOut cashOut = null)
         {
             this.rows = rows;
             this.scholar = scholar;
             this.forCashOut = forCashOut;
             this.cashOut = cashOut;
+            this.allRewards = allRewards;
             GetMinAndMaxDate();
         }
 
@@ -187,12 +189,37 @@ namespace Axie_Scholarship.Helpers
                     xlWorkSheet.Cells[11, 10] = "SLP Value:";
                     xlWorkSheet.Cells[12, 10] = "Total Amount you earned:";
 
-                    xlWorkSheet.Cells[8, 11] = cashOut.TotalSLP - (cashOut.ExtraSLP);
-                    xlWorkSheet.Cells[8, 12] = "Bonus SLP:  " + (cashOut.ExtraSLP).ToString();
+                    if (!cashOut.IsSlpCashOut)
+                    {
+                        xlWorkSheet.Cells[8, 11] = cashOut.TotalSLP - (cashOut.ExtraSLP);
+                        xlWorkSheet.Cells[8, 12] = "Bonus SLP:  " + (cashOut.ExtraSLP).ToString();
+                        xlWorkSheet.Cells[11, 11] = cashOut.SLPValue.ToString();
+                        xlWorkSheet.Cells[12, 11] = "Php " + cashOut.AmountReceived.ToString();
+                        xlWorkSheet.Cells[13, 10] = "SLP Balance: ";
+                        xlWorkSheet.Cells[13, 11] = cashOut.SLPBalance.ToString();
+                        
+                        xlWorkSheet.Cells[13, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[13, 10].Font.Bold = true;
+                        xlWorkSheet.Cells[13, 11].Font.Bold = true;
+                    }
+                    else
+                    {
+                        xlWorkSheet.Cells[8, 11] = cashOut.TotalSLP;
+                        xlWorkSheet.Cells[11, 11] = "   N/A   ";
+                        xlWorkSheet.Cells[12, 11] = "   N/A   ";
+                        xlWorkSheet.Cells[13, 10] = "Bonus SLP Earned: ";
+                        xlWorkSheet.Cells[13, 11] = (cashOut.ExtraSLP).ToString();
+                        xlWorkSheet.Cells[14, 10] = "Total Bonus SLP Balance: ";
+                        xlWorkSheet.Cells[14, 11] = cashOut.SLPBalance.ToString();
+                        
+                        xlWorkSheet.Cells[13, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[14, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[14, 10].Font.Bold = true;
+                        xlWorkSheet.Cells[14, 11].Font.Bold = true;
+
+                    }
                     xlWorkSheet.Cells[9, 11] = cashOut.TotalSLP;
                     xlWorkSheet.Cells[10, 11] = cashOut.ScholarSLP;
-                    xlWorkSheet.Cells[11, 11] = cashOut.SLPValue.ToString();
-                    xlWorkSheet.Cells[12, 11] = "Php " + cashOut.AmountReceived.ToString();
 
                     xlWorkSheet.Cells[10, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
                     xlWorkSheet.Cells[11, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
@@ -205,6 +232,19 @@ namespace Axie_Scholarship.Helpers
                     xlWorkSheet.Cells[8, 14] = "SLP Amount";
                     xlWorkSheet.Cells[8, 15] = "Date Acquired";
                     xlWorkSheet.Cells[8, 16] = "Reason";
+
+                    // rewards
+                    int rewardsRow = 8;
+                    if (allRewards != null)
+                    {
+                        foreach (DataRow row in allRewards.Rows)
+                        {
+                            rewardsRow++;
+                            xlWorkSheet.Cells[rewardsRow, 14] = row[0];
+                            xlWorkSheet.Cells[rewardsRow, 15] = row[1];
+                            xlWorkSheet.Cells[rewardsRow, 16] = row[2];
+                        }
+                    }
 
                     row = 13;
                 }

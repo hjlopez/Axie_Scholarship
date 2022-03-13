@@ -85,7 +85,8 @@ namespace Axie_Scholarship.Presenters
                                 dal.MakeInputParameters("EXTRASLP", cashOut.ExtraSLP),
                                 dal.MakeInputParameters("CASHOUTDATE", cashOut.CashOutDate),
                                 dal.MakeInputParameters("SLPVALUE", cashOut.SLPValue),
-                                dal.MakeInputParameters("AMOUNTRECEIVED", cashOut.AmountReceived));
+                                dal.MakeInputParameters("AMOUNTRECEIVED", cashOut.AmountReceived),
+                                dal.MakeInputParameters("ISEXTRASLPAPPLIED", cashOut.IsExtraSLPApplied));
 
                 return true;
             }
@@ -94,6 +95,29 @@ namespace Axie_Scholarship.Presenters
                 Logger.WriteLog(ex);
                 return false;
             }
+        }
+
+        public int GetBalanceSLP(long scholarId)
+        {
+            int result = 0;
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_scholar_total_extras", dal.MakeInputParameters("SCHOLARID", scholarId));
+                if (dt != null)
+                {
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        result += Convert.ToInt32(item["ExtraSLP"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+
+            return result;
         }
 
         public int ComputeTotalSLP(List<DataGridViewRow> rows)
@@ -111,6 +135,20 @@ namespace Axie_Scholarship.Presenters
             {
                 Logger.WriteLog(ex);
                 return 0;
+            }
+        }
+
+        public DataTable GetScholarExtrasForExcelGeneration(long scholarId)
+        {
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_extras_scholar_byId", dal.MakeInputParameters("SCHOLARID", scholarId));
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
             }
         }
 
