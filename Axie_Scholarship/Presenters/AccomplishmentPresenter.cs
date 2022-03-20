@@ -211,7 +211,18 @@ namespace Axie_Scholarship.Presenters
 
         public DataTable LoadData(T model)
         {
-            throw new NotImplementedException();
+            DataTable dt = null;
+            try
+            {
+                dt = dal.ExecuteDataTable("usp_get_accomplishments");
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+
+            return dt;
         }
 
         public bool Update(T model)
@@ -246,28 +257,181 @@ namespace Axie_Scholarship.Presenters
 
         public bool IsAccomplished(string description, List<DataGridViewRow> rows)
         {
-            List<string> criteria = null;
             bool gotReward = false;
             var p = new AccomplishmentCheckerPresenter();
             try
             {
-                // get checker
-                //foreach (string item in DescriptionConstants.checker)
-                //{
-                //    if (description.Contains(item))
-                //    {
-                //        criteria.Add(item);
-                //    }
-                //}
-
-                //if (criteria == null) return false;
-
                 // start checking
                 // one time checker
-                if (description.Contains("win") && description.Contains("once"))
+                #region PVPRecords
+                #region OneTimeChecker
+                if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
                 {
-                    if (p.CheckWinsOnce(rows, "15")) return true;
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), 1, DescriptionConstants.CWin)) return true;
                 }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), 1, DescriptionConstants.CLose)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), 1, DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // win and lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), 1, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), 1, DescriptionConstants.CLose)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), 1, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), 1, DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), 1, DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), 1, DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // win, lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.COnce))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), 1, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), 1, DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), 1, DescriptionConstants.CDraw)) return true;
+                }
+                #endregion
+
+                // frequency checker
+                #region FrequencyChecker
+                if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin)
+                        , GetTargetValue(description, DescriptionConstants.CTimesDuring), DescriptionConstants.CWin)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose)
+                        , GetTargetValue(description, DescriptionConstants.CTimesDuring), DescriptionConstants.CLose)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw)
+                        , GetTargetValue(description, DescriptionConstants.CTimesDuring), DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // win and lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    var times = GetTargetValue(description, DescriptionConstants.CTimesDuring);
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), times, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), times, DescriptionConstants.CLose)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    var times = GetTargetValue(description, DescriptionConstants.CTimesDuring);
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), times, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), times, DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    var times = GetTargetValue(description, DescriptionConstants.CTimesDuring);
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), times, DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), times, DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // win, lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTimesDuring))
+                {
+                    var times = GetTargetValue(description, DescriptionConstants.CTimesDuring);
+                    if (p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CWin), times, DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CLose), times, DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecord(rows, GetTargetValue(description, DescriptionConstants.CDraw), times, DescriptionConstants.CDraw)) return true;
+                }
+                #endregion
+
+                // total checker
+                #region TotalChecker
+                if (description.Contains(DescriptionConstants.CWinningRecord)) // total wins > total losses
+                {
+                    if (p.CheckWinLosePercentage(rows, true)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CLosingRecord)) // total wins < total losses
+                {
+                    if (p.CheckWinLosePercentage(rows, false)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CWin), DescriptionConstants.CWin)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CLose), DescriptionConstants.CLose)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CDraw), DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && description.Contains(DescriptionConstants.CLose) // win and lose
+                    && !description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CWin), DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CLose), DescriptionConstants.CLose)) return true;
+                }
+
+                else if (description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CWin), DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CDraw), DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CLose), DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CDraw), DescriptionConstants.CDraw)) return true;
+                }
+
+                else if (!description.Contains(DescriptionConstants.CWin) && !description.Contains(DescriptionConstants.CLose) // win, lose and draw
+                    && description.Contains(DescriptionConstants.CDraw) && description.Contains(DescriptionConstants.CTotal))
+                {
+                    if (p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CWin), DescriptionConstants.CWin) &&
+                        p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CLose), DescriptionConstants.CLose) &&
+                        p.CheckIndividualRecordTotal(rows, GetTargetValue(description, DescriptionConstants.CDraw), DescriptionConstants.CDraw)) return true;
+                }
+                #endregion
+                #endregion
+
+
             }
             catch (Exception ex)
             {
@@ -276,6 +440,108 @@ namespace Axie_Scholarship.Presenters
             }
 
             return gotReward;
+        }
+
+        public int GetFrequency(string description)
+        {
+            int value = 0;
+            int endIndex = 0;
+            int startIndex = 0;
+            bool doGet = false;
+            try
+            {
+                // get index of keyword
+                var a = description.IndexOf(DescriptionConstants.CLose);
+
+                // go back until you reached the open parenthesis string
+                var newDescription = description.Substring(0, a);
+                for (int i = newDescription.Length - 1; i >= 0; i--)
+                {
+                    // since it's backwards, get closing parenthesis first and assign it as the end index
+                    if (newDescription[i] == ')')
+                    {
+                        endIndex = i;
+                        doGet = true;
+                        continue;
+                    }
+                    else
+                    {
+                        if (doGet)
+                        {
+                            // check if open parenthesis and make it as start index
+                            if (newDescription[i] == '(')
+                            {
+                                startIndex = i;
+                                doGet = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // get the target value
+                // add 1 to start index to skip opening parenthesis
+                // subtract 1 from end index to skip closing parenthesis
+                value = Convert.ToInt32(newDescription.Substring(startIndex + 1, (endIndex - 1) - (startIndex)));
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+            return value;
+        }
+
+        public int GetTargetValue(string description, string keyword)
+        {
+            int value = 0;
+            int endIndex = 0;
+            int startIndex = 0;
+            bool doGet = false;
+            try
+            {
+                // get index of keyword
+                var a = description.IndexOf(keyword);
+
+                // go back until you reached the open parenthesis string
+                var newDescription = description.Substring(0, a);
+                for (int i = newDescription.Length - 1; i >= 0; i--)
+                {
+                    // since it's backwards, get closing parenthesis first and assign it as the end index
+                    if (newDescription[i] == ')')
+                    {
+                        endIndex = i;
+                        doGet = true;
+                        continue;
+                    }
+                    else
+                    {
+                        if (doGet)
+                        {
+                            // check if open parenthesis and make it as start index
+                            if (newDescription[i] == '(')
+                            {
+                                startIndex = i;
+                                doGet = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // get the target value
+                // add 1 to start index to skip opening parenthesis
+                // subtract 1 from end index to skip closing parenthesis
+                value = Convert.ToInt32(newDescription.Substring(startIndex + 1, (endIndex - 1) - (startIndex)));
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                MessageBox.Show("Issue on checking accomplishment! Please check logs at C:\\Axie_Logs", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+
+            return value;
         }
         
     }

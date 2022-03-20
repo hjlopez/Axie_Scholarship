@@ -189,11 +189,13 @@ namespace Axie_Scholarship.Views.Accomplishments
             vm.Record.Frequency = ExpressionsHelper.NumbersOnly(nmFrequency.Value.ToString()) ? Convert.ToInt32(nmFrequency.Value) : 0;
             if (presenter.Validate(vm))
             {
+                btnSave.Enabled = true;
                 lblError.Visible = false;
                 txtCustom.Text = presenter.GenerateDescription(vm);
             }
             else
             {
+                btnSave.Enabled = false;
                 lblError.Visible = true;
             }
         }
@@ -204,11 +206,13 @@ namespace Axie_Scholarship.Views.Accomplishments
             vm.Record.HasWinningPercentage = chkWinningPercent.Checked;
             if (presenter.Validate(vm))
             {
+                btnSave.Enabled = true;
                 lblError.Visible = false;
                 txtTotal.Text = presenter.GenerateDescription(vm);
             }
             else
             {
+                btnSave.Enabled = false;
                 lblError.Visible = true;
             }
         }
@@ -218,11 +222,13 @@ namespace Axie_Scholarship.Views.Accomplishments
             CreateData();
             if (presenter.Validate(vm))
             {
+                btnSave.Enabled = true;
                 lblError.Visible = false;
                 txtOnce.Text = presenter.GenerateDescription(vm);
             }
             else
             {
+                btnSave.Enabled = false;
                 lblError.Visible = true;
             }
         }

@@ -85,7 +85,9 @@ namespace Axie_Scholarship.Presenters
                                 dal.MakeInputParameters("EXTRASLP", cashOut.ExtraSLP),
                                 dal.MakeInputParameters("CASHOUTDATE", cashOut.CashOutDate),
                                 dal.MakeInputParameters("SLPVALUE", cashOut.SLPValue),
-                                dal.MakeInputParameters("AMOUNTRECEIVED", cashOut.AmountReceived));
+                                dal.MakeInputParameters("AMOUNTRECEIVED", cashOut.AmountReceived),
+                                dal.MakeInputParameters("ISEXTRASLPAPPLIED", cashOut.IsExtraSLPApplied),
+                                dal.MakeInputParameters("SLPVALUETRANSFERRED", cashOut.SLPValueTransferred));
 
                 return true;
             }
@@ -93,6 +95,72 @@ namespace Axie_Scholarship.Presenters
             {
                 Logger.WriteLog(ex);
                 return false;
+            }
+        }
+
+        public DataTable GetBalanceSLP(long scholarId)
+        {
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_scholar_total_extras", dal.MakeInputParameters("SCHOLARID", scholarId));
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                MessageBox.Show("Something went wrong in GetBalanceSLP. Please see logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+        }
+
+        public int GetVirtualRewards(DataTable dt)
+        {
+            int result = 0;
+            try
+            {
+                if (dt != null)
+                {
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        if (!Convert.ToBoolean(item["IsExtraSLPApplied"]))
+                        {
+                            result += Convert.ToInt32(item["ExtraSLP"]);
+                        }
+
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+        }
+
+        public int GetSLPToTransfer(DataTable dt)
+        {
+            int result = 0;
+            try
+            {
+                if (dt != null)
+                {
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        if (Convert.ToInt32(item["ScholarSLP"]) != Convert.ToInt32(item["SLPValueTransferred"]))
+                        {
+                            result += Math.Abs(Convert.ToInt32(item["ScholarSLP"]) - Convert.ToInt32(item["SLPValueTransferred"]));
+                        }
+
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
             }
         }
 
@@ -114,15 +182,32 @@ namespace Axie_Scholarship.Presenters
             }
         }
 
+        public DataTable GetScholarExtrasForExcelGeneration(long scholarId)
+        {
+            try
+            {
+                var dt = dal.ExecuteDataTable("usp_get_extras_scholar_byId", dal.MakeInputParameters("SCHOLARID", scholarId));
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return null;
+            }
+        }
+
         public int GetScholarExtrasById(long scholarId)
         {
             int slp = 0;
             try
             {
                 var dt = dal.ExecuteDataTable("usp_get_extras_scholar_byId", dal.MakeInputParameters("SCHOLARID", scholarId));
-                foreach (DataRow item in dt.Rows)
+                if (dt != null)
                 {
-                    slp += Convert.ToInt32(item["SLPValue"]);
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        slp += Convert.ToInt32(item["SLPValue"]);
+                    }
                 }
                 return slp;
             }
@@ -211,21 +296,6 @@ namespace Axie_Scholarship.Presenters
         {
             throw new NotImplementedException();
         }
-
-        public DataTable GetAccomplishments()
-        {
-            DataTable dt = null;
-            try
-            {
-                dt = dal.ExecuteDataTable("usp_get_accomplishments");
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLog(ex);
-                return null;
-            }
-
-            return dt;
-        }
+        
     }
 }

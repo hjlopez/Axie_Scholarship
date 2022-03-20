@@ -30,12 +30,7 @@
         {
             this.tbView = new System.Windows.Forms.TabControl();
             this.tbRecord = new System.Windows.Forms.TabPage();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.grpReward = new System.Windows.Forms.GroupBox();
-            this.txtReward = new System.Windows.Forms.TextBox();
-            this.rbExact = new System.Windows.Forms.RadioButton();
-            this.rbPercent = new System.Windows.Forms.RadioButton();
+            this.lblError = new System.Windows.Forms.Label();
             this.rbCheckout = new System.Windows.Forms.RadioButton();
             this.rbCustom = new System.Windows.Forms.RadioButton();
             this.rbDay = new System.Windows.Forms.RadioButton();
@@ -68,16 +63,21 @@
             this.txtWinDay = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSLP = new System.Windows.Forms.TabPage();
-            this.lblError = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.grpReward = new System.Windows.Forms.GroupBox();
+            this.txtReward = new System.Windows.Forms.TextBox();
+            this.rbExact = new System.Windows.Forms.RadioButton();
+            this.rbPercent = new System.Windows.Forms.RadioButton();
             this.label11 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.tbView.SuspendLayout();
             this.tbRecord.SuspendLayout();
-            this.grpReward.SuspendLayout();
             this.grpTotal.SuspendLayout();
             this.grpCustom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFrequency)).BeginInit();
             this.grpOnce.SuspendLayout();
+            this.grpReward.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbView
@@ -108,71 +108,17 @@
             this.tbRecord.Text = "PVP Records";
             this.tbRecord.UseVisualStyleBackColor = true;
             // 
-            // btnCancel
+            // lblError
             // 
-            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.Location = new System.Drawing.Point(920, 292);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(119, 51);
-            this.btnCancel.TabIndex = 9;
-            this.btnCancel.Text = "CANCEL";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(920, 222);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(119, 51);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "SAVE ENTRY";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // grpReward
-            // 
-            this.grpReward.Controls.Add(this.txtReward);
-            this.grpReward.Controls.Add(this.rbExact);
-            this.grpReward.Controls.Add(this.rbPercent);
-            this.grpReward.Enabled = false;
-            this.grpReward.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpReward.Location = new System.Drawing.Point(861, 110);
-            this.grpReward.Name = "grpReward";
-            this.grpReward.Size = new System.Drawing.Size(200, 87);
-            this.grpReward.TabIndex = 7;
-            this.grpReward.TabStop = false;
-            this.grpReward.Text = "Reward";
-            // 
-            // txtReward
-            // 
-            this.txtReward.Location = new System.Drawing.Point(64, 52);
-            this.txtReward.Name = "txtReward";
-            this.txtReward.Size = new System.Drawing.Size(63, 20);
-            this.txtReward.TabIndex = 2;
-            this.txtReward.Text = "1";
-            this.txtReward.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // rbExact
-            // 
-            this.rbExact.AutoSize = true;
-            this.rbExact.Location = new System.Drawing.Point(132, 19);
-            this.rbExact.Name = "rbExact";
-            this.rbExact.Size = new System.Drawing.Size(57, 17);
-            this.rbExact.TabIndex = 1;
-            this.rbExact.Text = "Exact\r\n";
-            this.rbExact.UseVisualStyleBackColor = true;
-            // 
-            // rbPercent
-            // 
-            this.rbPercent.AutoSize = true;
-            this.rbPercent.Location = new System.Drawing.Point(10, 19);
-            this.rbPercent.Name = "rbPercent";
-            this.rbPercent.Size = new System.Drawing.Size(69, 17);
-            this.rbPercent.TabIndex = 0;
-            this.rbPercent.Text = "Percent";
-            this.rbPercent.UseVisualStyleBackColor = true;
+            this.lblError.AutoSize = true;
+            this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblError.ForeColor = System.Drawing.Color.Red;
+            this.lblError.Location = new System.Drawing.Point(369, 310);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(167, 13);
+            this.lblError.TabIndex = 10;
+            this.lblError.Text = "* Please check your inputs!!";
+            this.lblError.Visible = false;
             // 
             // rbCheckout
             // 
@@ -502,22 +448,76 @@
             this.tbSLP.Location = new System.Drawing.Point(4, 22);
             this.tbSLP.Name = "tbSLP";
             this.tbSLP.Padding = new System.Windows.Forms.Padding(3);
-            this.tbSLP.Size = new System.Drawing.Size(839, 407);
+            this.tbSLP.Size = new System.Drawing.Size(839, 343);
             this.tbSLP.TabIndex = 1;
             this.tbSLP.Text = "SLP/MMR";
             this.tbSLP.UseVisualStyleBackColor = true;
             // 
-            // lblError
+            // btnCancel
             // 
-            this.lblError.AutoSize = true;
-            this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(369, 310);
-            this.lblError.Name = "lblError";
-            this.lblError.Size = new System.Drawing.Size(167, 13);
-            this.lblError.TabIndex = 10;
-            this.lblError.Text = "* Please check your inputs!!";
-            this.lblError.Visible = false;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancel.Location = new System.Drawing.Point(920, 292);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(119, 51);
+            this.btnCancel.TabIndex = 9;
+            this.btnCancel.Text = "CANCEL";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.Enabled = false;
+            this.btnSave.Location = new System.Drawing.Point(920, 222);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(119, 51);
+            this.btnSave.TabIndex = 8;
+            this.btnSave.Text = "SAVE ENTRY";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // grpReward
+            // 
+            this.grpReward.Controls.Add(this.txtReward);
+            this.grpReward.Controls.Add(this.rbExact);
+            this.grpReward.Controls.Add(this.rbPercent);
+            this.grpReward.Enabled = false;
+            this.grpReward.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpReward.Location = new System.Drawing.Point(861, 110);
+            this.grpReward.Name = "grpReward";
+            this.grpReward.Size = new System.Drawing.Size(200, 87);
+            this.grpReward.TabIndex = 7;
+            this.grpReward.TabStop = false;
+            this.grpReward.Text = "Reward";
+            // 
+            // txtReward
+            // 
+            this.txtReward.Location = new System.Drawing.Point(64, 52);
+            this.txtReward.Name = "txtReward";
+            this.txtReward.Size = new System.Drawing.Size(63, 20);
+            this.txtReward.TabIndex = 2;
+            this.txtReward.Text = "1";
+            this.txtReward.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // rbExact
+            // 
+            this.rbExact.AutoSize = true;
+            this.rbExact.Location = new System.Drawing.Point(132, 19);
+            this.rbExact.Name = "rbExact";
+            this.rbExact.Size = new System.Drawing.Size(57, 17);
+            this.rbExact.TabIndex = 1;
+            this.rbExact.Text = "Exact\r\n";
+            this.rbExact.UseVisualStyleBackColor = true;
+            // 
+            // rbPercent
+            // 
+            this.rbPercent.AutoSize = true;
+            this.rbPercent.Location = new System.Drawing.Point(10, 19);
+            this.rbPercent.Name = "rbPercent";
+            this.rbPercent.Size = new System.Drawing.Size(69, 17);
+            this.rbPercent.TabIndex = 0;
+            this.rbPercent.Text = "Percent";
+            this.rbPercent.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -557,8 +557,6 @@
             this.tbView.ResumeLayout(false);
             this.tbRecord.ResumeLayout(false);
             this.tbRecord.PerformLayout();
-            this.grpReward.ResumeLayout(false);
-            this.grpReward.PerformLayout();
             this.grpTotal.ResumeLayout(false);
             this.grpTotal.PerformLayout();
             this.grpCustom.ResumeLayout(false);
@@ -566,6 +564,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmFrequency)).EndInit();
             this.grpOnce.ResumeLayout(false);
             this.grpOnce.PerformLayout();
+            this.grpReward.ResumeLayout(false);
+            this.grpReward.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
