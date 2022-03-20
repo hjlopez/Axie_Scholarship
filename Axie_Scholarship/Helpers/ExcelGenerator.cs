@@ -195,9 +195,11 @@ namespace Axie_Scholarship.Helpers
                         xlWorkSheet.Cells[8, 12] = "Bonus SLP:  " + (cashOut.ExtraSLP).ToString();
                         xlWorkSheet.Cells[11, 11] = cashOut.SLPValue.ToString();
                         xlWorkSheet.Cells[12, 11] = "Php " + cashOut.AmountReceived.ToString();
-                        xlWorkSheet.Cells[13, 10] = "SLP Balance: ";
-                        xlWorkSheet.Cells[13, 11] = cashOut.SLPBalance.ToString();
-                        
+                        xlWorkSheet.Cells[13, 10] = "Total SLP for Transfer: ";
+                        xlWorkSheet.Cells[13, 11] = scholar.SLPToTransfer.ToString();
+                        xlWorkSheet.Cells[14, 10] = "Total Bonus SLP Balance: ";
+                        xlWorkSheet.Cells[14, 11] = cashOut.SLPBalance.ToString();
+
                         xlWorkSheet.Cells[13, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
                         xlWorkSheet.Cells[13, 10].Font.Bold = true;
                         xlWorkSheet.Cells[13, 11].Font.Bold = true;
@@ -207,19 +209,29 @@ namespace Axie_Scholarship.Helpers
                         xlWorkSheet.Cells[8, 11] = cashOut.TotalSLP;
                         xlWorkSheet.Cells[11, 11] = "   N/A   ";
                         xlWorkSheet.Cells[12, 11] = "   N/A   ";
-                        xlWorkSheet.Cells[13, 10] = "Bonus SLP Earned: ";
-                        xlWorkSheet.Cells[13, 11] = (cashOut.ExtraSLP).ToString();
-                        xlWorkSheet.Cells[14, 10] = "Total Bonus SLP Balance: ";
-                        xlWorkSheet.Cells[14, 11] = cashOut.SLPBalance.ToString();
+                        xlWorkSheet.Cells[16, 10] = "Total SLP for Transfer: ";
+                        xlWorkSheet.Cells[16, 11] = scholar.SLPToTransfer.ToString();
+                        xlWorkSheet.Cells[17, 10] = "Bonus SLP Earned: ";
+                        xlWorkSheet.Cells[17, 11] = (cashOut.ExtraSLP).ToString();
+                        xlWorkSheet.Cells[18, 10] = "Total Bonus SLP Balance: ";
+                        xlWorkSheet.Cells[18, 11] = cashOut.SLPBalance.ToString();
                         
-                        xlWorkSheet.Cells[13, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
-                        xlWorkSheet.Cells[14, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
-                        xlWorkSheet.Cells[14, 10].Font.Bold = true;
-                        xlWorkSheet.Cells[14, 11].Font.Bold = true;
+                        xlWorkSheet.Cells[16, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[17, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[18, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
+                        xlWorkSheet.Cells[18, 10].Font.Bold = true;
+                        xlWorkSheet.Cells[18, 11].Font.Bold = true;
+                        xlWorkSheet.Cells[16, 10].Font.Bold = true;
+                        xlWorkSheet.Cells[16, 11].Font.Bold = true;
 
                     }
                     xlWorkSheet.Cells[9, 11] = cashOut.TotalSLP;
                     xlWorkSheet.Cells[10, 11] = cashOut.ScholarSLP;
+
+                    xlWorkSheet.Cells[10, 10].Font.Bold = true;
+                    xlWorkSheet.Cells[10, 11].Font.Bold = true;
+                    xlWorkSheet.Cells[12, 10].Font.Bold = true;
+                    xlWorkSheet.Cells[12, 11].Font.Bold = true;
 
                     xlWorkSheet.Cells[10, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);
                     xlWorkSheet.Cells[11, 11].Interior.Color = System.Drawing.ColorTranslator.ToOle(darkGreen);

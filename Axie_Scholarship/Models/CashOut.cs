@@ -19,5 +19,6 @@ namespace Axie_Scholarship.Models
         public bool IsSlpCashOut { get; set; }
         public bool IsExtraSLPApplied { get; set; }
         public int SLPBalance { get; set; }
+        public decimal SLPValueTransferred { get; set; }
     }
 }

@@ -87,6 +87,7 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.chkSLPCashOut = new System.Windows.Forms.CheckBox();
+            this.chkTransferred = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMissingDates)).BeginInit();
             this.grpScholar.SuspendLayout();
             this.tbExtras.SuspendLayout();
@@ -294,7 +295,7 @@
             // btnCashOut
             // 
             this.btnCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCashOut.Location = new System.Drawing.Point(634, 94);
+            this.btnCashOut.Location = new System.Drawing.Point(634, 121);
             this.btnCashOut.Name = "btnCashOut";
             this.btnCashOut.Size = new System.Drawing.Size(122, 36);
             this.btnCashOut.TabIndex = 11;
@@ -305,7 +306,7 @@
             // btnCancel
             // 
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.Location = new System.Drawing.Point(634, 53);
+            this.btnCancel.Location = new System.Drawing.Point(634, 80);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(122, 35);
             this.btnCancel.TabIndex = 12;
@@ -609,11 +610,24 @@
             this.chkSLPCashOut.UseVisualStyleBackColor = true;
             this.chkSLPCashOut.CheckedChanged += new System.EventHandler(this.chkSLPCashOut_CheckedChanged);
             // 
+            // chkTransferred
+            // 
+            this.chkTransferred.AutoSize = true;
+            this.chkTransferred.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkTransferred.Location = new System.Drawing.Point(634, 38);
+            this.chkTransferred.Name = "chkTransferred";
+            this.chkTransferred.Size = new System.Drawing.Size(140, 17);
+            this.chkTransferred.TabIndex = 21;
+            this.chkTransferred.Text = "Mark as Transferred";
+            this.chkTransferred.UseVisualStyleBackColor = true;
+            this.chkTransferred.Visible = false;
+            // 
             // frmCashOut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.chkTransferred);
             this.Controls.Add(this.chkSLPCashOut);
             this.Controls.Add(this.tbExtras);
             this.Controls.Add(this.btnSLPLatest);
@@ -691,5 +705,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
         private System.Windows.Forms.CheckBox chkSLPCashOut;
+        private System.Windows.Forms.CheckBox chkTransferred;
     }
 }
