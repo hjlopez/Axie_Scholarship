@@ -367,5 +367,11 @@ namespace Axie_Scholarship.Views
                 }
             }
         }
+
+        private void btnSLPBalance_Click(object sender, EventArgs e)
+        {
+            var frm = new frmSLPBalance(scholar);
+            frm.ShowDialog();
+        }
     }
 }
