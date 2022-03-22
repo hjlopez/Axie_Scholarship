@@ -20,12 +20,15 @@ namespace Axie_Scholarship.Views
         Scholar scholar = null;
         SLPBalancePresenter<SLPBalanceViewModel> presenter;
         SLPBalanceViewModel vm;
+        DataTable dt = new DataTable();
         public frmSLPBalance(Scholar scholar)
         {
             InitializeComponent();
             this.scholar = scholar;
             presenter = new SLPBalancePresenter<SLPBalanceViewModel>();
             vm = new SLPBalanceViewModel();
+            vm.BonusCashOuts = new List<SLPBalanceViewModel.BonusCashOut>();
+            vm.EarnCashOuts = new List<SLPBalanceViewModel.EarnCashOut>();
 
             LoadData();
         }
@@ -33,7 +36,7 @@ namespace Axie_Scholarship.Views
         private void LoadData()
         {
             vm.ScholarId = scholar.ScholarId;
-            var dt = presenter.LoadData(vm);
+            dt = presenter.LoadData(vm);
 
             int bonus = 0;
             decimal earned = 0;
@@ -43,11 +46,13 @@ namespace Axie_Scholarship.Views
                 {
                     if (!Convert.ToBoolean(row["IsExtraSLPApplied"]))
                     {
+                        vm.BonusCashOuts.Add(new SLPBalanceViewModel.BonusCashOut { CashOutId = Convert.ToInt32(row["CashOutId"])});
                         bonus += Convert.ToInt32(row["ExtraSLP"]);
                     }
 
                     if (Convert.ToDecimal(row["SLPValueTransferred"]) != Convert.ToDecimal(row["ScholarSLP"]))
                     {
+                        vm.EarnCashOuts.Add(new SLPBalanceViewModel.EarnCashOut { CashOutId = Convert.ToInt32(row["CashOutId"])});
                         earned += Math.Abs(Convert.ToDecimal(row["SLPValueTransferred"]) - Convert.ToDecimal(row["ScholarSLP"]));
                     }
                 }
@@ -92,6 +97,44 @@ namespace Axie_Scholarship.Views
         {
             btnBalanceCashout.Enabled = txtEarnedSLP.Text == "0" ? false : true;
             btnBonusCashout.Enabled = txtBonusSLP.Text == "0" ? false : true;
+        }
+
+        private void btnBalanceCashout_Click(object sender, EventArgs e)
+        {
+            if (vm.EarnCashOuts.Count != 0)
+            {
+                vm.IsEarnedCashout = true;
+                if (presenter.Update(vm))
+                {
+                    MessageBox.Show("Earned SLP updated successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblEarnedAmt.Text = "Php 0.00";
+                    txtEarnedSLP.Text = "0";
+                    EnableDisableButtons();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong during update! Please check the logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnBonusCashout_Click(object sender, EventArgs e)
+        {
+            if (vm.BonusCashOuts.Count != 0)
+            {
+                vm.IsEarnedCashout = false;
+                if (presenter.Update(vm))
+                {
+                    MessageBox.Show("Bonus SLP updated successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblBonusEarned.Text = "Php 0.00";
+                    txtBonusSLP.Text = "0";
+                    EnableDisableButtons();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong during update! Please check the logs.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

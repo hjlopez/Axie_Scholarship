@@ -157,6 +157,7 @@
             this.btnBalanceCashout.TabIndex = 9;
             this.btnBalanceCashout.Text = "Cash Out";
             this.btnBalanceCashout.UseVisualStyleBackColor = true;
+            this.btnBalanceCashout.Click += new System.EventHandler(this.btnBalanceCashout_Click);
             // 
             // btnBonusCashout
             // 
@@ -167,6 +168,7 @@
             this.btnBonusCashout.TabIndex = 10;
             this.btnBonusCashout.Text = "Cash Out";
             this.btnBonusCashout.UseVisualStyleBackColor = true;
+            this.btnBonusCashout.Click += new System.EventHandler(this.btnBonusCashout_Click);
             // 
             // frmSLPBalance
             // 

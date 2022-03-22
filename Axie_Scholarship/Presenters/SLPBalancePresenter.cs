@@ -45,7 +45,31 @@ namespace Axie_Scholarship.Presenters
 
         public bool Update(T model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (model.IsEarnedCashout)
+                {
+                    for (int i = 0; i < model.EarnCashOuts.Count; i++)
+                    {
+                        dal.ExecuteDataTable("usp_upd_scholar_earned_cashout", dal.MakeInputParameters("CASHOUTID", model.EarnCashOuts[i].CashOutId));
+                    }
+                    
+                }
+                else
+                {
+                    for (int i = 0; i < model.BonusCashOuts.Count; i++)
+                    {
+                        dal.ExecuteDataTable("usp_upd_scholar_bonus_cashout", dal.MakeInputParameters("CASHOUTID", model.BonusCashOuts[i].CashOutId));
+                    }
+                }
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return false;
+            }
         }
     }
 }
