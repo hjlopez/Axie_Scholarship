@@ -73,9 +73,11 @@
     <Compile Include="Presenters\ExtrasPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\ScholarSLPPresenter.cs" />
+    <Compile Include="Presenters\SLPBalancePresenter.cs" />
     <Compile Include="ViewModels\AccomplishmentViewModel.cs" />
     <Compile Include="ViewModels\ExtraSLPViewModel.cs" />
     <Compile Include="ViewModels\ScholarDetailViewModel.cs" />
+    <Compile Include="ViewModels\SLPBalanceViewModel.cs" />
     <Compile Include="ViewModels\SLPCoinViewModel.cs" />
     <Compile Include="Views\Accomplishments\frmAccomplishments.cs">
       <SubType>Form</SubType>
@@ -127,6 +129,12 @@
     <Compile Include="Views\frmScholarView.Designer.cs">
       <DependentUpon>frmScholarView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\frmSLPBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmSLPBalance.Designer.cs">
+      <DependentUpon>frmSLPBalance.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Views\Accomplishments\frmAccomplishments.resx">
       <DependentUpon>frmAccomplishments.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,6 +167,9 @@
     </Compile>
     <EmbeddedResource Include="Views\frmScholarView.resx">
       <DependentUpon>frmScholarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmSLPBalance.resx">
+      <DependentUpon>frmSLPBalance.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
