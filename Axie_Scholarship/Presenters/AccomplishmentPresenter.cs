@@ -19,10 +19,12 @@ namespace Axie_Scholarship.Presenters
         DataAccessLayer dal;
         string type = "";
         string finalDescription = "";
+        AccomplishmentCheckerPresenter p = null;
         public AccomplishmentPresenter(string type)
         {
             dal = new DataAccessLayer();
             this.type = type;
+            p = new AccomplishmentCheckerPresenter(); 
         }
 
         public bool Delete(T model)
@@ -258,7 +260,7 @@ namespace Axie_Scholarship.Presenters
         public bool IsAccomplished(string description, List<DataGridViewRow> rows)
         {
             bool gotReward = false;
-            var p = new AccomplishmentCheckerPresenter();
+            
             try
             {
                 // start checking
@@ -440,6 +442,20 @@ namespace Axie_Scholarship.Presenters
             }
 
             return gotReward;
+        }
+
+        public int CheckForPenalties(List<DataGridViewRow> rows, int limit)
+        {
+            try
+            {
+                int count = p.CheckForPenalties(rows, limit);
+                return count;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return -1;
+            }
         }
 
         public int GetFrequency(string description)

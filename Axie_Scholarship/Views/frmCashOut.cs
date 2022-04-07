@@ -41,8 +41,8 @@ namespace Axie_Scholarship.Views
             presenter = new ScholarSLPPresenter<ScholarDetailViewModel>();
             chkSLPCashOut.Checked = this.scholar.IsSLPCashout;
             GetMinAndMaxDate();
-            LoadDetails();
             DetermineMissingDates();
+            LoadDetails();
             LoadAccomplishments();
             if (this.scholar.IsSLPCashout)
             {
@@ -115,7 +115,22 @@ namespace Axie_Scholarship.Views
                     dgvOthers.Rows.Add(data["Reason"], data["SLPValue"], true);
                 }
             }
-           
+
+            // check for penalties
+            int penaltyCount = p.CheckForPenalties(rowCollection, scholar.ToPenaltyLimit);
+            penaltyCount += dgvMissingDates.Rows.Count;
+            int SLPPenaltyTotal = 0;
+
+            if (penaltyCount >= scholar.ToPenaltyLimit)
+            {
+                for (int i = 3; i <= penaltyCount; i++)
+                {
+                    dgvPenalty.Rows.Add("Less than 20 games/Missing play dates " + i + " times", -i, true);
+                    SLPPenaltyTotal += i;
+                }
+
+                lblScholarSLP.Text = (Convert.ToDecimal(lblScholarSLP.Text) - SLPPenaltyTotal).ToString();
+            }
         }
 
         private void EditColumns()
@@ -303,7 +318,7 @@ namespace Axie_Scholarship.Views
 
                 if (dgvPenalty.Rows.Count > 0)
                 {
-                    foreach (DataGridViewRow row in dgvBonus.Rows)
+                    foreach (DataGridViewRow row in dgvPenalty.Rows)
                     {
                         if (Convert.ToBoolean(row.Cells[2].Value))
                             dt.Rows.Add(row.Cells[1].Value, DateTime.Now.Date.ToShortDateString(), row.Cells[0].Value);
@@ -395,6 +410,7 @@ namespace Axie_Scholarship.Views
         private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow row;
+            bool isPenalty = false;
             // determine checkbox status
             if (e.RowIndex >= 0 && e.ColumnIndex == 2)
             {
@@ -407,6 +423,16 @@ namespace Axie_Scholarship.Views
                 {
                     dgvPenalty.CommitEdit(DataGridViewDataErrorContexts.Commit);
                     row = dgvPenalty.Rows[e.RowIndex];
+
+                    if (Convert.ToBoolean(row.Cells[2].Value))
+                    {
+                        lblScholarSLP.Text = (Convert.ToDecimal(lblScholarSLP.Text) + Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                    }
+                    else
+                    {
+                        lblScholarSLP.Text = (Convert.ToDecimal(lblScholarSLP.Text) - Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                    }
+                    isPenalty = true;
                 }
                 else
                 {
@@ -415,20 +441,23 @@ namespace Axie_Scholarship.Views
                 }
 
                 // check value 
-                if (Convert.ToBoolean(row.Cells[2].Value))
+                if (!isPenalty)
                 {
-                    lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
-                    reward += Convert.ToInt32(row.Cells[1].Value.ToString());
-                }
-                else
-                {
-                    lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) - Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
-                    reward -= Convert.ToInt32(row.Cells[1].Value.ToString());
-                }
+                    if (Convert.ToBoolean(row.Cells[2].Value))
+                    {
+                        lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) + Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                        reward += Convert.ToInt32(row.Cells[1].Value.ToString());
+                    }
+                    else
+                    {
+                        lblAdjSLP.Text = (Convert.ToInt32(lblAdjSLP.Text) - Convert.ToInt32(row.Cells[1].Value.ToString())).ToString();
+                        reward -= Convert.ToInt32(row.Cells[1].Value.ToString());
+                    }
 
-                if (chkApply.Checked)
-                {
-                    lblTotalSLP.Text = (Convert.ToInt32(origSLP) + Convert.ToInt32(lblAdjSLP.Text)).ToString();
+                    if (chkApply.Checked)
+                    {
+                        lblTotalSLP.Text = (Convert.ToInt32(origSLP) + Convert.ToInt32(lblAdjSLP.Text)).ToString();
+                    }
                 }
             }
         }

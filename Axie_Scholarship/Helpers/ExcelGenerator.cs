@@ -185,7 +185,7 @@ namespace Axie_Scholarship.Helpers
                 if (forCashOut)
                 {
                     xlWorkSheet.Cells[9, 10] = "Adjusted SLP Value:";
-                    xlWorkSheet.Cells[10, 10] = "Total SLP you earned:";
+                    xlWorkSheet.Cells[10, 10] = "Total SLP you earned w/ deductions:";
                     xlWorkSheet.Cells[11, 10] = "SLP Value:";
                     xlWorkSheet.Cells[12, 10] = "Total Amount you earned:";
 

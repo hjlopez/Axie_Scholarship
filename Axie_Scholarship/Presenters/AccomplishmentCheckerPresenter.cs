@@ -141,5 +141,32 @@ namespace Axie_Scholarship.Presenters
 
             return false;
         }
+
+        // penalties = less than 20 games played or did not play at all
+        public int CheckForPenalties(List<DataGridViewRow> rows, int limit)
+        {
+            int count = 0;
+            try
+            {
+                // check number of games
+                foreach (DataGridViewRow row in rows)
+                {
+                    record = row.Cells["Record"].Value.ToString().Split('-');
+                    if (Convert.ToInt32(record[0]) + Convert.ToInt32(record[1]) + Convert.ToInt32(record[2]) < 20)
+                    {
+                        count++;
+                    }
+                }
+
+                // check missing dates
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLog(ex);
+                return 0;
+            }
+
+            return count;
+        }
     }
 }
