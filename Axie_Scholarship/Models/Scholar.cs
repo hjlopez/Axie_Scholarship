@@ -16,5 +16,6 @@ namespace Axie_Scholarship.Models
         public int ScholarCut { get; set; }
         public bool IsSLPCashout { get; set; }
         public int SLPToTransfer { get; set; }
+        public int ToPenaltyLimit = 3;
     }
 }
